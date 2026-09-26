@@ -138,9 +138,9 @@ All data tables use `UNIQUE(row_id)` with `INSERT OR IGNORE`. Redelivered rows a
 
 ### Ingest: two transactions, which gives the two failpoints real meaning
 1. Read the file and parse it. Normalise v2 amounts to int, keep only the declared fields, drop profiles, and reduce unsupported rows to `(batch, row_id, stream)`. Compute the canonical hash.
-   - **Canonical hash rule:** hash only the normalised, **declared business fields** of a supported stream, in a fixed order with fixed encoding, e.g. `json.dumps([...fields], separators=(',',':'))` with amounts as decimal strings.
-   - Never hash the raw line, envelope fields (`row_id`, `batch`, `schema_version`), extra fields, profiles or unknown-schema payloads.
-   - Test it: v1 `99` and v2 `"99"` must hash equal, and an added extra field must not change the hash.
+   - **Business-equality rule (as implemented):** each supported stream is parsed into a typed NamedTuple holding **only its declared business fields**, with v2 amounts already converted to int. Tuple equality *is* business equality, so no separate canonical hash is needed. Envelope fields (`row_id`, `batch`, `schema_version`), extra fields, profiles and unknown payloads are never part of the tuple.
+   - Tested: v1 `99` and v2 `"99"` are equal, and extra payload or envelope fields don't change equality (`tests/test_records.py`).
+   - Storage consequence: revision selection runs in Python over rows loaded with `batch <= B`, sharing one code path with the in-memory reference `engine.core.evaluate`. If the scale tests show loading is too slow, add a hash column and push the selection down into SQL.
 2. If `batch` is already in `batches`, exit 0 and do nothing, even if a failpoint was given.
 3. **Txn A (stage)**: `INSERT OR IGNORE` the rows into the per-stream tables, then COMMIT, which makes them durable. → `--failpoint after-stage` exits 86 here. The rows are durable but invisible.
 4. **Txn B (publish)**: `BEGIN IMMEDIATE`, then `INSERT INTO batches`. → `--failpoint before-commit` exits 86 immediately before `COMMIT`, which rolls back. Otherwise, COMMIT. This single-row commit is the atomic visibility boundary for the batch payload, revision history, erasure effects and the checkpoint.
