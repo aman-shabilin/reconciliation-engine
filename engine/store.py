@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS batches (
     batch        INTEGER PRIMARY KEY,
     committed_at TEXT NOT NULL,
     row_count    INTEGER NOT NULL,
-    input_sha256 TEXT NOT NULL
+    row_set_sha256 TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS ledger_rev (
     row_id         TEXT PRIMARY KEY,
@@ -99,6 +99,10 @@ class InputError(Exception):
     """The input file violates the transport contract."""
 
 
+class IntegrityError(Exception):
+    """A different file claims the number of an already-committed batch."""
+
+
 def _hard_exit(code: int) -> None:
     # Crash-equivalent: no Python cleanup, no rollback call, no commit.
     os._exit(code)
@@ -118,8 +122,21 @@ def _connect(db_path: Path, readonly: bool = False) -> sqlite3.Connection:
     return conn
 
 
+def row_set_fingerprint(rows) -> str:
+    """SHA-256 over the batch's sorted distinct row_ids.
+
+    Identifies a batch's content without deriving anything from payloads:
+    row_ids are opaque and a reused row_id with different bytes is out of
+    scope, so the row_id set determines the batch. Unlike a hash of the raw
+    file it is not a fingerprint of PII, and it is stable under line
+    reordering or whitespace changes in a retried file.
+    """
+    joined = "\n".join(sorted({r.row_id for r in rows}))
+    return hashlib.sha256(joined.encode("utf-8")).hexdigest()
+
+
 def read_batch_file(input_path: Path):
-    """Parse one JSONL batch file. Returns (batch, rows, sha256, line_count)."""
+    """Parse one JSONL batch file. Returns (batch, rows, fingerprint, line_count)."""
     raw = input_path.read_bytes()
     rows = [parse_line(line) for line in raw.decode("utf-8").splitlines() if line.strip()]
     if not rows:
@@ -130,7 +147,21 @@ def read_batch_file(input_path: Path):
     batch = rows[0].batch
     if type(batch) is not int or batch < 1:
         raise InputError("batch must be a positive integer")
-    return batch, rows, hashlib.sha256(raw).hexdigest(), len(rows)
+    return batch, rows, row_set_fingerprint(rows), len(rows)
+
+
+STAGED_TABLES = ("ledger_rev", "merchant_rev", "fx_rev", "unsupported", "erasures")
+
+
+def _discard_uncommitted(conn: sqlite3.Connection, batch: int) -> None:
+    """Drop rows left by an earlier, never-committed staging of this batch.
+
+    They are invisible, but without this a different file later committed
+    under the same batch number would publish them too. Afterwards the
+    staged rows are exactly the current file's rows.
+    """
+    for table in STAGED_TABLES:
+        conn.execute(f"DELETE FROM {table} WHERE batch = ?", (batch,))
 
 
 def _stage(conn: sqlite3.Connection, rows) -> Counter:
@@ -159,8 +190,8 @@ def _stage(conn: sqlite3.Connection, rows) -> Counter:
             counts["erasures"] += 1
         else:  # profile: discarded at parse time, nothing to write
             counts["profiles_discarded"] += 1
-    # INSERT OR IGNORE on row_id: exact redelivery and staged-then-replayed
-    # batches are idempotent.
+    # INSERT OR IGNORE on row_id: an exact row redelivered within the file
+    # collapses to one.
     conn.executemany("INSERT OR IGNORE INTO ledger_rev VALUES (?,?,?,?,?,?,?,?,?,?)", ledger)
     conn.executemany("INSERT OR IGNORE INTO merchant_rev VALUES (?,?,?,?,?,?,?,?)", merchants)
     conn.executemany("INSERT OR IGNORE INTO fx_rev VALUES (?,?,?,?,?,?,?)", fx)
@@ -181,7 +212,7 @@ def _ensure_schema(conn: sqlite3.Connection) -> None:
 
 
 def _is_committed(conn: sqlite3.Connection, batch: int) -> Optional[str]:
-    row = conn.execute("SELECT input_sha256 FROM batches WHERE batch = ?", (batch,)).fetchone()
+    row = conn.execute("SELECT row_set_sha256 FROM batches WHERE batch = ?", (batch,)).fetchone()
     return row[0] if row else None
 
 
@@ -189,13 +220,17 @@ def ingest(input_path: Path, state_dir: Path, failpoint: Optional[str] = None,
            crash: Callable[[int], None] = _hard_exit, log=print) -> str:
     """Ingest one batch file. Returns 'committed' or 'already-committed'.
 
+    Raises IntegrityError, changing nothing, if the batch is already
+    committed with a different row set: that is an operator mistake, not a
+    retry, and silently accepting it would hide it.
+
     Transaction A durably stages rows (failpoint after-stage fires after it
     commits). Transaction B inserts the checkpoint row (failpoint
     before-commit fires inside it, immediately before COMMIT).
     """
     if failpoint is not None and failpoint not in FAILPOINTS:
         raise ValueError(f"unknown failpoint {failpoint!r}")
-    batch, rows, sha, line_count = read_batch_file(input_path)
+    batch, rows, fingerprint, line_count = read_batch_file(input_path)
 
     state_dir.mkdir(parents=True, exist_ok=True)
     conn = _connect(state_dir / DB_NAME)
@@ -203,15 +238,20 @@ def ingest(input_path: Path, state_dir: Path, failpoint: Optional[str] = None,
         _ensure_schema(conn)
         prior = _is_committed(conn, batch)
         if prior is not None:
-            if prior != sha:
-                log(f"ingest batch {batch}: already committed with different file bytes; "
-                    f"ignoring retry")
-            else:
-                log(f"ingest batch {batch}: already committed; no-op")
+            if prior != fingerprint:
+                raise IntegrityError(f"batch {batch} is already committed with a different "
+                                     f"row set; refusing to ingest this file")
+            log(f"ingest batch {batch}: already committed; no-op")
             return "already-committed"
 
         # Transaction A: durable staging, invisible until the checkpoint commits.
         conn.execute("BEGIN IMMEDIATE")
+        if _is_committed(conn, batch) is not None:
+            # Committed between our check and this lock: never touch its rows.
+            conn.execute("ROLLBACK")
+            log(f"ingest batch {batch}: already committed; no-op")
+            return "already-committed"
+        _discard_uncommitted(conn, batch)
         counts = _stage(conn, rows)
         conn.execute("COMMIT")
         if failpoint == "after-stage":
@@ -223,7 +263,7 @@ def ingest(input_path: Path, state_dir: Path, failpoint: Optional[str] = None,
         conn.execute("BEGIN IMMEDIATE")
         if _is_committed(conn, batch) is None:
             conn.execute("INSERT INTO batches VALUES (?, strftime('%Y-%m-%dT%H:%M:%SZ','now'), ?, ?)",
-                         (batch, line_count, sha))
+                         (batch, line_count, fingerprint))
         if failpoint == "before-commit":
             log(f"ingest batch {batch}: failpoint before-commit")
             crash(86)

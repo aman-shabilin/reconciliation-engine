@@ -16,7 +16,8 @@ Requires Python ≥ 3.9 on PATH as `python3` (override with `PYTHON=...`, e.g. `
 ```
 
 Exit codes: `0` success · `65` snapshot cutoff B not covered by committed batches 1..B (existing `--out` untouched) ·
-`86` failpoint fired · `2` usage error · `1` other failure (PII-safe message; `RECON_DEBUG=1` for a traceback).
+`86` failpoint fired · `2` usage error · `1` rejected input (e.g. a different file claiming an already-committed
+batch number) or other failure. Stderr never carries payload values; there is no debug mode that relaxes this.
 
 ## Tests
 

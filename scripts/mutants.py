@@ -69,6 +69,13 @@ MUTANTS = [
      "counts = _stage(conn, rows) if failpoint != 'after-stage' else crash(86)"),
     ("replay of committed batch re-commits", "engine/store.py",
      "        if prior is not None:\n", "        if False:\n"),
+    ("stale staged rows kept on re-stage", "engine/store.py",
+     "        _discard_uncommitted(conn, batch)\n", ""),
+    ("different file under committed batch accepted", "engine/store.py",
+     "if prior != fingerprint:", "if False:"),
+    ("fingerprint depends on line order", "engine/store.py",
+     'joined = "\\n".join(sorted({r.row_id for r in rows}))',
+     'joined = "\\n".join(r.row_id for r in rows)'),
     ("snapshot writes output before gap check can fail", "engine/cli.py",
      "        report = store.load_report(args.state.resolve(), query)\n",
      "        args.out.resolve().write_bytes(b'partial')\n"

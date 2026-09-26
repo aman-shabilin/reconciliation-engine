@@ -65,7 +65,8 @@ For each selected, non-blocked **POST** whose date falls in `[start_date, end_da
 - [ ] Exit codes: 0 means success. **86** means a failpoint fired on a batch not seen before. **65** means the snapshot needs batches 1..B and one is missing; in that case nothing is published and the existing `--out` file is left byte-for-byte unchanged.
 - [ ] `after-stage`: the batch is staged durably but not visible. `before-commit`: we stop immediately before the atomic visibility boundary. Both leave the previous state visible. A replay without a failpoint then commits **exactly once**. **No fake early exit** before durable staging happens.
 - [ ] One atomic visibility unit covers the batch payload, revision history, erasure effects and processed-batch checkpoint.
-- [ ] Ingesting a batch that is already committed is a no-op that exits 0 (idempotent retry).
+- [ ] Ingesting a batch that is already committed is a no-op that exits 0 (idempotent retry), with or without a failpoint. A *different* file claiming a committed batch number (a different `row_id` set) is rejected with exit 1 and changes nothing.
+- [ ] An erasure with an unsupported schema version is quarantined as `UNSUPPORTED_SCHEMA` and does **not** erase. This is settled by §2 ("quarantined"), not an open question. DESIGN.md states the interpretation.
 - [ ] A snapshot may use only `--state` and the query. It must not reread input files, use the network or depend on the CWD.
 - [ ] Concurrent readers see committed state only. I need to be able to explain the isolation, e.g. SQLite WAL gives each read transaction a consistent snapshot.
 - [ ] Output is published atomically: write a temp file **in the same directory** as `--out`, fsync it, then `os.replace`.
@@ -119,7 +120,9 @@ For each selected, non-blocked **POST** whose date falls in `[start_date, end_da
 ### State layout (`/state/engine.db`, WAL mode, `synchronous=FULL`, `secure_delete=ON`)
 Every table has **explicit typed columns for each stream**. There is no generic JSON or payload column anywhere, so an unexpected field (a profile name, an unknown payload) has nowhere to go.
 
-- `batches(batch PK, committed_at, row_count, file_sha256)`: the processed-batch checkpoint and **the commit marker**. A batch is visible if and only if it has a row here.
+- `batches(batch PK, committed_at, row_count, row_set_sha256)`: the processed-batch checkpoint and **the commit marker**. A batch is visible if and only if it has a row here.
+  - `row_set_sha256` hashes the sorted `row_id`s, **not the raw file**. A raw-file hash would be a fingerprint of unredacted input, including profile names and emails. `row_id`s are opaque, and the `row_id` set identifies the batch, because a reused `row_id` with different bytes is out of scope. It is also stable when a retried file has its lines reordered.
+  - Staging first deletes any uncommitted rows for the batch. Without that, rows left behind by a different, abandoned file under the same batch number would be published along with the new file.
 - `ledger_rev(entry_id, version, batch, row_id, op, merchant_id, customer_token, effective_at, currency, amount TEXT, canon_hash)`
 - `merchant_rev(merchant_id, valid_from, version, batch, row_id, valid_to, region, tier, canon_hash)`
 - `fx_rev(currency, date, version, batch, row_id, num TEXT, den TEXT, canon_hash)`
@@ -169,7 +172,7 @@ Full recompute on 200k keys should take only a few seconds. The spec allows it a
 | 2 | SQLite state, ingest with its two transactions, snapshot, CLI `run` | 2 h | Ingest 1..12 → all 10 `expected/*.json` match **exactly** |
 | 3 | **Dockerfile, done early because it is the biggest schedule risk** (digest-pinned, non-root). Test with `docker run --read-only --user 12345 --network none --tmpfs /tmp -v ...` | 1 h | Public fixtures pass inside the container |
 | 4 | Durability tests: both failpoints followed by replay, snapshot while a batch is staged but not published, retrying the same batch, reordered ingest with interim 65 checks, gap → 65 with `--out` unchanged, restart | 1.5 h | Test suite is green |
-| ★ | **Milestone gate, non-negotiable.** Public output matches, both failpoints recover, gap rejection works, and Docker runs. **Nothing below starts until this holds.** If time runs short, cut from the steps below and record the cuts in LIMITATIONS.md | — | |
+| ★ | **Milestone gate, non-negotiable, in two halves.** *Functional (host):* public output matches, both failpoints recover, gap rejection works. *Release (Linux container):* the same, plus the `run` shell adapter, an arbitrary UID, a read-only root filesystem, WAL access under `--read-only`, and directory fsync semantics. **Only a container run counts as passing the release half.** Nothing below starts until both hold, except scale work that doesn't need Docker. If time runs short, cut from the steps below and record the cuts in LIMITATIONS.md | — | |
 | 5 | Privacy: grep the state dir, WAL files and stderr for `SYNTHETIC_` and `example.invalid`; check that erasure masks old cutoffs | 0.75 h | No hits |
 | 6 | Scale generator (seeded, gitignored output), measure ingest, snapshot, RSS and disk | 1.25 h | Numbers inside targets, written to EVIDENCE |
 | 7 | Docs: README, DESIGN, OPERATIONS, AI_LOG, EVIDENCE, LIMITATIONS, plus the raw logs | 2.25 h | Word limits respected |

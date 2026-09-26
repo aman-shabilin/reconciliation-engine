@@ -4,8 +4,9 @@ Exit codes: 0 success, 65 snapshot cutoff not covered by committed batches
 1..B, 86 failpoint fired, 2 usage error, 1 any other failure.
 
 Diagnostics go to stderr and never include payload values. Unexpected
-errors print only the exception type and location; set RECON_DEBUG=1 for a
-full traceback (developer use: messages may echo input values).
+errors print only the exception type and location, never the message or a
+traceback, because either can echo input values. There is deliberately no
+debug switch that relaxes this; debug with the test suite instead.
 """
 import argparse
 import json
@@ -63,13 +64,13 @@ def main(argv=None) -> int:
     args = _parser().parse_args(argv)
     try:
         return _ingest(args) if args.command == "ingest" else _snapshot(args)
+    except (store.IntegrityError, store.InputError) as e:
+        log(f"{args.command} rejected: {e}")  # messages built from batch numbers only
+        return 1
     except Exception as e:  # noqa: BLE001 - last-resort, PII-safe reporting
-        if os.environ.get("RECON_DEBUG") == "1":
-            traceback.print_exc()
-        else:
-            frame = traceback.extract_tb(e.__traceback__)[-1]
-            log(f"{args.command} failed: {type(e).__name__} at "
-                f"{Path(frame.filename).name}:{frame.lineno}")
+        frame = traceback.extract_tb(e.__traceback__)[-1]
+        log(f"{args.command} failed: {type(e).__name__} at "
+            f"{Path(frame.filename).name}:{frame.lineno}")
         return 1
 
 

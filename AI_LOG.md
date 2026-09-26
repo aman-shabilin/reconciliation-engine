@@ -60,9 +60,22 @@ The reviewer raised seven points. Claude checked each one against the spec and a
   - A reader that started before an erasure commits keeps its snapshot.
 - **AI mistake caught:** when storage mutants were added, Claude also added unittest's fail-fast flag in the wrong position (`unittest -f discover`). Every mutant then "failed" because `discover` was treated as a missing test module, so the result showed 25/25 killed in 3 seconds. The implausible runtime prompted a check. The harness now runs an unmutated baseline first and prints the test that killed each mutant. After the fix: 25/25 killed, each with a named test. The earlier 19/19 result is unaffected, because it predates the flag.
 
+### 7. External review of the storage layer — Claude's design choices corrected
+The reviewer challenged five points. All were accepted, one with an adaptation:
+- **Raw-file SHA-256 in the checkpoint** was a fingerprint of unredacted input, including profile PII. It was replaced by a hash of the sorted `row_id` set.
+- **Different file under a committed batch number:** it had been logged and accepted silently. It is now rejected with exit 1 and no change.
+- **Adapted:** the two points above were solved together. The `row_id`-set fingerprint carries no PII, detects a genuinely different file, and still accepts a retry whose lines are reordered, which a raw-file hash would have wrongly rejected.
+- **A real bug found while doing this:** rows left over from a staged but never-committed file would have been published when a different file with the same batch number committed. Staging now first discards the batch's uncommitted rows.
+- **`RECON_DEBUG` traceback mode removed.** It contradicted the "stderr carries no PII" guarantee.
+- **Unsupported-schema erasure behaviour:** Claude had listed it as an open question for the hiring team. The spec's "quarantined" settles it, so the question was withdrawn.
+- **Milestone wording:** Claude had said the gate "passes except Docker". That was overstated. The plan now separates a functional gate, which passes on the host, from a release gate that only a Linux container run can pass.
+- **Checked:** 80 tests pass. 28/28 mutants are killed, including three new ones: stale staged rows kept, a different committed file accepted, and a fingerprint that depends on line order.
+
 ## Suggestions rejected or corrected
 
 2. Claude's own first design, a generic `canon_json` staging table, rejected after review because it could retain PII (interaction 2).
 3. Claude's own first plan, a canonical hash column, replaced by typed-tuple equality (interaction 4).
 4. Claude's first mutant list included one mutant that can never be detected, so it was removed (interaction 5).
 5. Claude's mutation harness reported false kills because of a misplaced `-f` flag. The result was rejected and the harness fixed and hardened with a baseline run (interaction 6).
+6. Claude's checkpoint design, a raw-file SHA-256 with silent acceptance of a different file, was corrected after review (interaction 7).
+7. Claude's plan to ask the hiring team about unsupported-schema erasures was withdrawn, because the spec already settles it (interaction 7).

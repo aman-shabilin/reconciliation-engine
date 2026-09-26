@@ -143,6 +143,62 @@ class FailpointRecoveryTest(TempDirTest):
         self.assertEqual(self.report("q04"), oracle(range(1, 5), QUERIES["q04"]))
 
 
+class BatchIdentityTest(TempDirTest):
+    def write_batch(self, name, lines):
+        path = self.tmp / name
+        path.write_text("".join(l if l.endswith("\n") else l + "\n" for l in lines),
+                        encoding="utf-8")
+        return path
+
+    def batch_lines(self, batch):
+        return BATCHES[batch].read_text(encoding="utf-8").splitlines()
+
+    def rogue_ledger_line(self, batch):
+        return json.dumps({
+            "batch": batch, "row_id": "rogue-1", "stream": "ledger", "schema_version": 1,
+            "payload": {"entry_id": "ROGUE", "version": 1, "op": "POST",
+                        "merchant_id": "K17_M0", "customer_token": "CX",
+                        "effective_at": "2026-01-01T12:00:00Z", "currency": "USD",
+                        "amount_minor": 1000}})
+
+    def test_reordered_retry_is_the_same_batch(self):
+        self.commit_all([1, 2, 3])
+        before = self.counts()
+        reordered = self.write_batch("b3.jsonl", list(reversed(self.batch_lines(3))) + [""])
+        self.assertEqual(store.ingest(reordered, self.state, crash=crash, log=quiet),
+                         "already-committed")
+        self.assertEqual(self.counts(), before)
+
+    def test_different_file_for_committed_batch_is_rejected_without_change(self):
+        self.commit_all([1, 2, 3])
+        before = self.counts()
+        altered = self.write_batch("b3.jsonl", self.batch_lines(3) + [self.rogue_ledger_line(3)])
+        with self.assertRaises(store.IntegrityError):
+            store.ingest(altered, self.state, crash=crash, log=quiet)
+        self.assertEqual(self.counts(), before)
+        r = cli("ingest", "--input", altered, "--state", self.state, cwd=self.tmp)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("already committed with a different row set", r.stderr)
+
+    def test_orphan_rows_from_a_different_staged_file_are_not_published(self):
+        self.commit_all([1, 2])
+        wrong = self.write_batch("wrong3.jsonl", self.batch_lines(3) + [self.rogue_ledger_line(3)])
+        with self.assertRaises(Crashed):
+            store.ingest(wrong, self.state, "after-stage", crash=crash, log=quiet)
+        self.assertEqual(self.ingest(3), "committed")
+        self.assertEqual(self.report("q03"), oracle([1, 2, 3], QUERIES["q03"]))
+
+    def test_checkpoint_holds_no_payload_derived_fingerprint(self):
+        self.commit_all([1])
+        conn = sqlite3.connect(self.state / store.DB_NAME)
+        try:
+            (fp,) = conn.execute("SELECT row_set_sha256 FROM batches").fetchone()
+        finally:
+            conn.close()
+        self.assertEqual(fp, store.row_set_fingerprint(ROWS[1]))
+        self.assertNotEqual(fp, hashlib.sha256(BATCHES[1].read_bytes()).hexdigest())
+
+
 class GapAndOrderTest(TempDirTest):
     def test_gap_rejected(self):
         self.commit_all([1, 2, 4])
