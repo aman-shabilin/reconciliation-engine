@@ -19,6 +19,22 @@ Exit codes: `0` success · `65` snapshot cutoff B not covered by committed batch
 `86` failpoint fired · `2` usage error · `1` rejected input (e.g. a different file claiming an already-committed
 batch number) or other failure. Stderr never carries payload values; there is no debug mode that relaxes this.
 
+## Docker
+
+```sh
+docker build -t recon-engine .
+docker run --rm --read-only --user 12345:12345 --network none --tmpfs /tmp \
+  -v "$PWD/data:/data:ro" -v recon-state:/state -v "$PWD/out:/out" \
+  recon-engine ingest --input /data/batch_01.jsonl --state /state
+docker run ... recon-engine /app/run snapshot --query /data/q.json --state /state --out /out/q.json
+docker run --rm --read-only --tmpfs /tmp recon-engine selftest    # full test suite inside the image
+python3 scripts/container_check.py                                # release-gate checks (see EVIDENCE.md)
+```
+
+The adapter is `/app/run`. The entrypoint accepts either `ingest|snapshot ...` directly or an explicit `/app/run ...`.
+The base image is pinned by digest, and there are no third-party packages ([requirements.lock](requirements.lock)), so the
+image runs offline. `/app` is root-owned and read-only to the runtime user; only `/state`, `/tmp` and the output mount are written.
+
 ## Tests
 
 ```sh

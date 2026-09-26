@@ -1,0 +1,4 @@
+# Runtime and test dependencies: none. The engine and its tests use only the
+# Python 3 standard library (json, sqlite3, hashlib, unittest, ...).
+# The interpreter and SQLite versions are pinned by the base image digest in
+# Dockerfile (python:3.12-slim@sha256:f77ac9e4...).

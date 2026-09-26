@@ -1,0 +1,15 @@
+.git
+.claude
+.vscode
+ai-logs
+docs
+state
+out
+scale
+bench
+**/__pycache__
+*.db
+*.db-wal
+*.db-shm
+.env
+.env.*
