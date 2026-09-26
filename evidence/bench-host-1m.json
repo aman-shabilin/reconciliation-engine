@@ -1,0 +1,126 @@
+{
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "cpus": 12,
+    "ram_gib": 31.9,
+    "python": "3.14.6",
+    "sqlite": "3.50.4"
+  },
+  "ingest": [
+    {
+      "batch": "batch_01.jsonl",
+      "rows": 6055,
+      "seconds": 0.13797070001601242,
+      "peak_rss": 26927104
+    },
+    {
+      "batch": "batch_02.jsonl",
+      "rows": 101203,
+      "seconds": 0.9616027000010945,
+      "peak_rss": 144998400
+    },
+    {
+      "batch": "batch_03.jsonl",
+      "rows": 102756,
+      "seconds": 1.3851280999951996,
+      "peak_rss": 146657280
+    },
+    {
+      "batch": "batch_04.jsonl",
+      "rows": 103056,
+      "seconds": 1.7151305000006687,
+      "peak_rss": 147734528
+    },
+    {
+      "batch": "batch_05.jsonl",
+      "rows": 104460,
+      "seconds": 1.8781258999952115,
+      "peak_rss": 148729856
+    },
+    {
+      "batch": "batch_06.jsonl",
+      "rows": 105742,
+      "seconds": 1.9574532999831717,
+      "peak_rss": 150282240
+    },
+    {
+      "batch": "batch_07.jsonl",
+      "rows": 107797,
+      "seconds": 2.0912119999993593,
+      "peak_rss": 153501696
+    },
+    {
+      "batch": "batch_08.jsonl",
+      "rows": 109915,
+      "seconds": 2.19902010000078,
+      "peak_rss": 155992064
+    },
+    {
+      "batch": "batch_09.jsonl",
+      "rows": 113304,
+      "seconds": 2.338816500006942,
+      "peak_rss": 160301056
+    },
+    {
+      "batch": "batch_10.jsonl",
+      "rows": 117115,
+      "seconds": 2.5532834000186995,
+      "peak_rss": 165027840
+    },
+    {
+      "batch": "batch_11.jsonl",
+      "rows": 122848,
+      "seconds": 2.697332899988396,
+      "peak_rss": 173383680
+    },
+    {
+      "batch": "batch_12.jsonl",
+      "rows": 24018,
+      "seconds": 0.8687568999885116,
+      "peak_rss": 51707904
+    }
+  ],
+  "snapshot": [
+    {
+      "query": "query_early_cutoff",
+      "seconds": 5.821400000015274,
+      "peak_rss": 697311232,
+      "settlements": 5980,
+      "trace": 485417,
+      "exceptions": 4222,
+      "verified": "-"
+    },
+    {
+      "query": "query_empty",
+      "seconds": 4.377193399996031,
+      "peak_rss": 940347392,
+      "settlements": 0,
+      "trace": 0,
+      "exceptions": 1707,
+      "verified": "-"
+    },
+    {
+      "query": "query_full",
+      "seconds": 12.189673499990022,
+      "peak_rss": 1398665216,
+      "settlements": 6020,
+      "trace": 973887,
+      "exceptions": 6286,
+      "verified": "-"
+    },
+    {
+      "query": "query_hot_day",
+      "seconds": 6.366605300019728,
+      "peak_rss": 939966464,
+      "settlements": 104,
+      "trace": 256172,
+      "exceptions": 2099,
+      "verified": "-"
+    }
+  ],
+  "ingest_total_seconds": 20.783832999994047,
+  "state_bytes_after_ingest": 127254528,
+  "state_bytes_final": 127287296
+}

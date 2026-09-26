@@ -13,7 +13,7 @@ out/
 *.db-shm
 
 # Generated scale data
-scale/
+scale*/
 bench/
 
 # Secrets

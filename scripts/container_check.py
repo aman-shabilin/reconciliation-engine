@@ -186,6 +186,20 @@ def main():
         fail("q04 output changed")
     print(f"    sha256 unchanged: {after.split()[0]}")
 
+    scale = ROOT / "scale"
+    if (scale / "batch_01.jsonl").exists():
+        section("scale benchmark at the evaluation limits (--cpus 4 --memory 8g)")
+        state = volume("scale-state")
+        r = sh(["run", "--rm", "--read-only", "--user", UID, "--network", "none", "--tmpfs", "/tmp",
+                "--cpus", "4", "--memory", "8g", "--memory-swap", "8g",
+                "--mount", f"type=bind,src={scale},dst=/scale,readonly",
+                "-v", f"{state}:/state", IMAGE,
+                "python3", "/app/scripts/bench.py", "--data", "/scale", "--state", "/state/bench",
+                "--verify"], quiet=True)
+        print(r.stdout)
+    else:
+        print("\n(scale/ not generated; skipping scale benchmark: run scripts/gen_scale.py)")
+
     cleanup()
     print("\nALL CONTAINER CHECKS PASSED")
 

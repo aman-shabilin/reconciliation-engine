@@ -1,0 +1,30 @@
+$ python scripts/gen_scale.py && python scripts/bench.py --verify
+# run at 2026-09-26T09:45:35Z
+host: {"platform": "Windows-11-10.0.26200-SP0", "machine": "AMD64", "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD", "cpus": 12, "ram_gib": 31.9, "python": "3.14.6", "sqlite": "3.50.4"}
+input: 12 batches, 55.0 MiB
+
+| batch | rows | exit | wall s | peak RSS |
+|---|---:|---:|---:|---:|
+| batch_01.jsonl | 6055 | 0 | 0.13 | 26 MiB |
+| batch_02.jsonl | 20264 | 0 | 0.26 | 45 MiB |
+| batch_03.jsonl | 20439 | 0 | 0.28 | 45 MiB |
+| batch_04.jsonl | 20864 | 0 | 0.29 | 46 MiB |
+| batch_05.jsonl | 20818 | 0 | 0.29 | 46 MiB |
+| batch_06.jsonl | 21106 | 0 | 0.31 | 46 MiB |
+| batch_07.jsonl | 21522 | 0 | 0.35 | 46 MiB |
+| batch_08.jsonl | 22068 | 0 | 0.38 | 47 MiB |
+| batch_09.jsonl | 22558 | 0 | 0.41 | 48 MiB |
+| batch_10.jsonl | 23368 | 0 | 0.45 | 48 MiB |
+| batch_11.jsonl | 24513 | 0 | 0.49 | 50 MiB |
+| batch_12.jsonl | 4887 | 0 | 0.24 | 29 MiB |
+
+ingest total 3.9 s, max peak RSS 50 MiB, state 24.4 MiB
+
+| query | exit | wall s | peak RSS | settlements | trace | exceptions | verified |
+|---|---:|---:|---:|---:|---:|---:|---|
+| query_early_cutoff | 0 | 1.13 | 159 MiB | 5973 | 97183 | 822 | yes |
+| query_empty | 0 | 0.80 | 204 MiB | 0 | 0 | 316 | yes |
+| query_full | 0 | 2.27 | 293 MiB | 6020 | 194905 | 1214 | yes |
+| query_hot_day | 0 | 1.14 | 205 MiB | 104 | 51497 | 385 | yes |
+
+final state 24.4 MiB

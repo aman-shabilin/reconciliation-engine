@@ -1,0 +1,126 @@
+{
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "cpus": 12,
+    "ram_gib": 31.9,
+    "python": "3.14.6",
+    "sqlite": "3.50.4"
+  },
+  "ingest": [
+    {
+      "batch": "batch_01.jsonl",
+      "rows": 6055,
+      "seconds": 0.13131369999609888,
+      "peak_rss": 27103232
+    },
+    {
+      "batch": "batch_02.jsonl",
+      "rows": 20264,
+      "seconds": 0.25693520001368597,
+      "peak_rss": 47136768
+    },
+    {
+      "batch": "batch_03.jsonl",
+      "rows": 20439,
+      "seconds": 0.27713860000949353,
+      "peak_rss": 47325184
+    },
+    {
+      "batch": "batch_04.jsonl",
+      "rows": 20864,
+      "seconds": 0.2880810000060592,
+      "peak_rss": 47857664
+    },
+    {
+      "batch": "batch_05.jsonl",
+      "rows": 20818,
+      "seconds": 0.2920964999939315,
+      "peak_rss": 47816704
+    },
+    {
+      "batch": "batch_06.jsonl",
+      "rows": 21106,
+      "seconds": 0.31344300002092496,
+      "peak_rss": 48295936
+    },
+    {
+      "batch": "batch_07.jsonl",
+      "rows": 21522,
+      "seconds": 0.3517070999951102,
+      "peak_rss": 48480256
+    },
+    {
+      "batch": "batch_08.jsonl",
+      "rows": 22068,
+      "seconds": 0.3820309000147972,
+      "peak_rss": 49430528
+    },
+    {
+      "batch": "batch_09.jsonl",
+      "rows": 22558,
+      "seconds": 0.41476800001692027,
+      "peak_rss": 49901568
+    },
+    {
+      "batch": "batch_10.jsonl",
+      "rows": 23368,
+      "seconds": 0.4527163000020664,
+      "peak_rss": 50483200
+    },
+    {
+      "batch": "batch_11.jsonl",
+      "rows": 24513,
+      "seconds": 0.49285799998324364,
+      "peak_rss": 52649984
+    },
+    {
+      "batch": "batch_12.jsonl",
+      "rows": 4887,
+      "seconds": 0.2385818000184372,
+      "peak_rss": 29982720
+    }
+  ],
+  "snapshot": [
+    {
+      "query": "query_early_cutoff",
+      "seconds": 1.1267820000066422,
+      "peak_rss": 167133184,
+      "settlements": 5973,
+      "trace": 97183,
+      "exceptions": 822,
+      "verified": "yes"
+    },
+    {
+      "query": "query_empty",
+      "seconds": 0.8042136000003666,
+      "peak_rss": 213434368,
+      "settlements": 0,
+      "trace": 0,
+      "exceptions": 316,
+      "verified": "yes"
+    },
+    {
+      "query": "query_full",
+      "seconds": 2.268081299989717,
+      "peak_rss": 307060736,
+      "settlements": 6020,
+      "trace": 194905,
+      "exceptions": 1214,
+      "verified": "yes"
+    },
+    {
+      "query": "query_hot_day",
+      "seconds": 1.1398713999951724,
+      "peak_rss": 215306240,
+      "settlements": 104,
+      "trace": 51497,
+      "exceptions": 385,
+      "verified": "yes"
+    }
+  ],
+  "ingest_total_seconds": 3.891670100070769,
+  "state_bytes_after_ingest": 25546752,
+  "state_bytes_final": 25579520
+}

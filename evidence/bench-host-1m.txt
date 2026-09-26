@@ -1,0 +1,30 @@
+$ python scripts/gen_scale.py --keys 1000000 --out scale-1m && python scripts/bench.py --data scale-1m
+# run at 2026-09-26T09:45:49Z
+host: {"platform": "Windows-11-10.0.26200-SP0", "machine": "AMD64", "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD", "cpus": 12, "ram_gib": 31.9, "python": "3.14.6", "sqlite": "3.50.4"}
+input: 12 batches, 271.2 MiB
+
+| batch | rows | exit | wall s | peak RSS |
+|---|---:|---:|---:|---:|
+| batch_01.jsonl | 6055 | 0 | 0.14 | 26 MiB |
+| batch_02.jsonl | 101203 | 0 | 0.96 | 138 MiB |
+| batch_03.jsonl | 102756 | 0 | 1.39 | 140 MiB |
+| batch_04.jsonl | 103056 | 0 | 1.72 | 141 MiB |
+| batch_05.jsonl | 104460 | 0 | 1.88 | 142 MiB |
+| batch_06.jsonl | 105742 | 0 | 1.96 | 143 MiB |
+| batch_07.jsonl | 107797 | 0 | 2.09 | 146 MiB |
+| batch_08.jsonl | 109915 | 0 | 2.20 | 149 MiB |
+| batch_09.jsonl | 113304 | 0 | 2.34 | 153 MiB |
+| batch_10.jsonl | 117115 | 0 | 2.55 | 157 MiB |
+| batch_11.jsonl | 122848 | 0 | 2.70 | 165 MiB |
+| batch_12.jsonl | 24018 | 0 | 0.87 | 49 MiB |
+
+ingest total 20.8 s, max peak RSS 165 MiB, state 121.4 MiB
+
+| query | exit | wall s | peak RSS | settlements | trace | exceptions | verified |
+|---|---:|---:|---:|---:|---:|---:|---|
+| query_early_cutoff | 0 | 5.82 | 665 MiB | 5980 | 485417 | 4222 | - |
+| query_empty | 0 | 4.38 | 897 MiB | 0 | 0 | 1707 | - |
+| query_full | 0 | 12.19 | 1334 MiB | 6020 | 973887 | 6286 | - |
+| query_hot_day | 0 | 6.37 | 896 MiB | 104 | 256172 | 2099 | - |
+
+final state 121.4 MiB
