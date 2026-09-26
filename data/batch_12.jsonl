@@ -1,0 +1,2 @@
+{"batch":12,"row_id":"r17_000000229","stream":"ledger","schema_version":1,"payload":{"entry_id":"L17_E64","version":1,"op":"POST","merchant_id":"K17_M0","customer_token":"C0","effective_at":"2026-01-01T12:00:00Z","currency":"USD","amount_minor":17}}
+{"batch":12,"row_id":"r17_000000230","stream":"future_stream","schema_version":1,"payload":{"note":"ignore"}}

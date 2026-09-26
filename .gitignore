@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Engine state and outputs (never commit)
+state/
+out/
+*.db
+*.db-wal
+*.db-shm
+
+# Generated scale data
+scale/
+bench/
+
+# Secrets
+.env
+.env.*
+
+# Local tool settings
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

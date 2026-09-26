@@ -1,0 +1,31 @@
+{
+  "query_id": "empty",
+  "settlements": [],
+  "trace": [],
+  "exceptions": [
+    {
+      "stream": "future_stream",
+      "key": "r17_000000230",
+      "code": "UNSUPPORTED_SCHEMA",
+      "version": null
+    },
+    {
+      "stream": "fx",
+      "key": "XTS|2026-01-01",
+      "code": "REVISION_CONFLICT",
+      "version": 1
+    },
+    {
+      "stream": "ledger",
+      "key": "r17_000000221",
+      "code": "UNSUPPORTED_SCHEMA",
+      "version": null
+    },
+    {
+      "stream": "merchants",
+      "key": "K17_MX|2026-01-01T00:00:00Z",
+      "code": "REVISION_CONFLICT",
+      "version": 1
+    }
+  ]
+}

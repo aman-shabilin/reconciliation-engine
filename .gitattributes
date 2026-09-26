@@ -1,0 +1,6 @@
+# Keep LF everywhere regardless of core.autocrlf: the `run` shebang breaks
+# with CRLF, and fixture bytes must not be altered.
+* text=auto eol=lf
+run text eol=lf
+*.sh text eol=lf
+*.jsonl text eol=lf

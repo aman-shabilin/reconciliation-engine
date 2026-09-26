@@ -1,0 +1,741 @@
+{
+  "query_id": "q07",
+  "settlements": [
+    {
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "net_usd_micro": 4503781271048852,
+      "entry_count": 15
+    },
+    {
+      "date": "2026-01-01",
+      "merchant_id": "K17_M3",
+      "region": "SG",
+      "tier": "standard",
+      "net_usd_micro": -44958612585,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-01",
+      "merchant_id": "K17_M73",
+      "region": "SG",
+      "tier": "standard",
+      "net_usd_micro": -159573340057,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-01",
+      "merchant_id": "K17_M94",
+      "region": "EU",
+      "tier": "standard",
+      "net_usd_micro": -145789965656,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "net_usd_micro": 52684769528,
+      "entry_count": 13
+    },
+    {
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "net_usd_micro": 464579527858,
+      "entry_count": 10
+    },
+    {
+      "date": "2026-01-03",
+      "merchant_id": "K17_M11",
+      "region": "SG",
+      "tier": "standard",
+      "net_usd_micro": -80822624171,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-03",
+      "merchant_id": "K17_M2",
+      "region": "EU",
+      "tier": "standard",
+      "net_usd_micro": 123120015300,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-03",
+      "merchant_id": "K17_M73",
+      "region": "SG",
+      "tier": "standard",
+      "net_usd_micro": 138632228620,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-03",
+      "merchant_id": "K17_M81",
+      "region": "SG",
+      "tier": "standard",
+      "net_usd_micro": -2928008,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-03",
+      "merchant_id": "K17_M96",
+      "region": "EU",
+      "tier": "standard",
+      "net_usd_micro": -74483019037,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "net_usd_micro": -233368074871,
+      "entry_count": 11
+    },
+    {
+      "date": "2026-01-04",
+      "merchant_id": "K17_M12",
+      "region": "EU",
+      "tier": "standard",
+      "net_usd_micro": -1576535,
+      "entry_count": 1
+    },
+    {
+      "date": "2026-01-04",
+      "merchant_id": "K17_M17",
+      "region": "SG",
+      "tier": "standard",
+      "net_usd_micro": 87309442958,
+      "entry_count": 1
+    }
+  ],
+  "trace": [
+    {
+      "entry_id": "L17_E0",
+      "version": 3,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 50,
+      "customer_token": null
+    },
+    {
+      "entry_id": "L17_E10",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 50981444693,
+      "customer_token": "C10"
+    },
+    {
+      "entry_id": "L17_E11",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 11487744397,
+      "customer_token": "C11"
+    },
+    {
+      "entry_id": "L17_E12",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -139562089107,
+      "customer_token": "C12"
+    },
+    {
+      "entry_id": "L17_E13",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 154379433520,
+      "customer_token": "C13"
+    },
+    {
+      "entry_id": "L17_E14",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M81",
+      "region": "SG",
+      "tier": "standard",
+      "usd_micro": -2928008,
+      "customer_token": "C14"
+    },
+    {
+      "entry_id": "L17_E15",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -127920940569,
+      "customer_token": "C15"
+    },
+    {
+      "entry_id": "L17_E16",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M2",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 123120015300,
+      "customer_token": "C16"
+    },
+    {
+      "entry_id": "L17_E17",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M94",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": -145789965656,
+      "customer_token": "C17"
+    },
+    {
+      "entry_id": "L17_E18",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 1288587,
+      "customer_token": "C18"
+    },
+    {
+      "entry_id": "L17_E19",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -107074714655,
+      "customer_token": "C19"
+    },
+    {
+      "entry_id": "L17_E2",
+      "version": 2,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 0,
+      "customer_token": "C2"
+    },
+    {
+      "entry_id": "L17_E20",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -18240665930,
+      "customer_token": "C20"
+    },
+    {
+      "entry_id": "L17_E21",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 152399624158,
+      "customer_token": "C21"
+    },
+    {
+      "entry_id": "L17_E22",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 29470138283,
+      "customer_token": "C22"
+    },
+    {
+      "entry_id": "L17_E23",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 165891710587,
+      "customer_token": null
+    },
+    {
+      "entry_id": "L17_E24",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 29578110247,
+      "customer_token": null
+    },
+    {
+      "entry_id": "L17_E25",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -1673245,
+      "customer_token": "C2"
+    },
+    {
+      "entry_id": "L17_E26",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 157511731614,
+      "customer_token": "C3"
+    },
+    {
+      "entry_id": "L17_E27",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 172875637803,
+      "customer_token": "C4"
+    },
+    {
+      "entry_id": "L17_E28",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": -87124345642,
+      "customer_token": "C5"
+    },
+    {
+      "entry_id": "L17_E29",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 4200994796,
+      "customer_token": "C6"
+    },
+    {
+      "entry_id": "L17_E3",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": -2,
+      "customer_token": "C3"
+    },
+    {
+      "entry_id": "L17_E30",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M11",
+      "region": "SG",
+      "tier": "standard",
+      "usd_micro": -80822624171,
+      "customer_token": "C7"
+    },
+    {
+      "entry_id": "L17_E31",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 3057334,
+      "customer_token": "C8"
+    },
+    {
+      "entry_id": "L17_E32",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M73",
+      "region": "SG",
+      "tier": "standard",
+      "usd_micro": 138632228620,
+      "customer_token": "C9"
+    },
+    {
+      "entry_id": "L17_E33",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 111724316915,
+      "customer_token": "C10"
+    },
+    {
+      "entry_id": "L17_E34",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 65016424461,
+      "customer_token": "C11"
+    },
+    {
+      "entry_id": "L17_E35",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -46983360295,
+      "customer_token": "C12"
+    },
+    {
+      "entry_id": "L17_E36",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M73",
+      "region": "SG",
+      "tier": "standard",
+      "usd_micro": -159573340057,
+      "customer_token": "C13"
+    },
+    {
+      "entry_id": "L17_E37",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 166033139399,
+      "customer_token": "C14"
+    },
+    {
+      "entry_id": "L17_E38",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M96",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": -74483019037,
+      "customer_token": "C15"
+    },
+    {
+      "entry_id": "L17_E39",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 964564,
+      "customer_token": "C16"
+    },
+    {
+      "entry_id": "L17_E4",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 4503599627370496,
+      "customer_token": "C4"
+    },
+    {
+      "entry_id": "L17_E40",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -170148913591,
+      "customer_token": "C17"
+    },
+    {
+      "entry_id": "L17_E41",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M17",
+      "region": "SG",
+      "tier": "standard",
+      "usd_micro": 87309442958,
+      "customer_token": "C18"
+    },
+    {
+      "entry_id": "L17_E42",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -63520,
+      "customer_token": "C19"
+    },
+    {
+      "entry_id": "L17_E43",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 18184792819,
+      "customer_token": "C20"
+    },
+    {
+      "entry_id": "L17_E44",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -167314340871,
+      "customer_token": "C21"
+    },
+    {
+      "entry_id": "L17_E45",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M12",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": -1576535,
+      "customer_token": "C22"
+    },
+    {
+      "entry_id": "L17_E46",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M3",
+      "region": "SG",
+      "tier": "standard",
+      "usd_micro": -44958612585,
+      "customer_token": null
+    },
+    {
+      "entry_id": "L17_E47",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -4021111,
+      "customer_token": null
+    },
+    {
+      "entry_id": "L17_E48",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -21117884225,
+      "customer_token": "C2"
+    },
+    {
+      "entry_id": "L17_E49",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": -171955036591,
+      "customer_token": "C3"
+    },
+    {
+      "entry_id": "L17_E5",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 0,
+      "customer_token": "C5"
+    },
+    {
+      "entry_id": "L17_E50",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -221362,
+      "customer_token": "C4"
+    },
+    {
+      "entry_id": "L17_E51",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 142240876730,
+      "customer_token": "C5"
+    },
+    {
+      "entry_id": "L17_E52",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -2908985,
+      "customer_token": "C6"
+    },
+    {
+      "entry_id": "L17_E53",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -57827734991,
+      "customer_token": "C7"
+    },
+    {
+      "entry_id": "L17_E54",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 162154967021,
+      "customer_token": "C8"
+    },
+    {
+      "entry_id": "L17_E55",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 82556648283,
+      "customer_token": "C9"
+    },
+    {
+      "entry_id": "L17_E56",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -91944336199,
+      "customer_token": "C10"
+    },
+    {
+      "entry_id": "L17_E57",
+      "version": 1,
+      "date": "2026-01-02",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 64576176799,
+      "customer_token": "C11"
+    },
+    {
+      "entry_id": "L17_E58",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -36924648310,
+      "customer_token": "C12"
+    },
+    {
+      "entry_id": "L17_E59",
+      "version": 1,
+      "date": "2026-01-04",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": -100318777244,
+      "customer_token": "C13"
+    },
+    {
+      "entry_id": "L17_E6",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 50,
+      "customer_token": "C6"
+    },
+    {
+      "entry_id": "L17_E7",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": -50,
+      "customer_token": "C7"
+    },
+    {
+      "entry_id": "L17_E8",
+      "version": 1,
+      "date": "2026-01-03",
+      "merchant_id": "K17_M0",
+      "region": "US",
+      "tier": "premium",
+      "usd_micro": 68733291450,
+      "customer_token": "C8"
+    },
+    {
+      "entry_id": "L17_E9",
+      "version": 1,
+      "date": "2026-01-01",
+      "merchant_id": "K17_M0",
+      "region": "EU",
+      "tier": "standard",
+      "usd_micro": 4062806,
+      "customer_token": "C9"
+    }
+  ],
+  "exceptions": [
+    {
+      "stream": "fx",
+      "key": "XTS|2026-01-01",
+      "code": "REVISION_CONFLICT",
+      "version": 1
+    },
+    {
+      "stream": "ledger",
+      "key": "L17_E61",
+      "code": "MISSING_MERCHANT",
+      "version": 1
+    },
+    {
+      "stream": "ledger",
+      "key": "L17_E62",
+      "code": "MISSING_FX",
+      "version": 1
+    },
+    {
+      "stream": "ledger",
+      "key": "r17_000000221",
+      "code": "UNSUPPORTED_SCHEMA",
+      "version": null
+    },
+    {
+      "stream": "merchants",
+      "key": "K17_MX|2026-01-01T00:00:00Z",
+      "code": "REVISION_CONFLICT",
+      "version": 1
+    }
+  ]
+}
