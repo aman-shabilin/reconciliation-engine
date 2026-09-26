@@ -1,0 +1,8 @@
+#!/bin/sh
+# Adapter: ./run ingest|snapshot ... (see engine/cli.py for exit codes).
+# Works from any working directory and on a read-only root filesystem.
+set -eu
+HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONPATH="$HERE${PYTHONPATH:+:$PYTHONPATH}"
+exec "${PYTHON:-python3}" -B -m engine.cli "$@"

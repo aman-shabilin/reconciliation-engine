@@ -7,7 +7,6 @@
 | Tool | Model | Used for | Raw logs |
 |---|---|---|---|
 | Claude Code (VS Code extension) | Claude Opus 5.5 (`claude-opus-5-5`) | Assessment reading, planning, implementation, tests | [`ai-logs/claude-code/`](ai-logs/claude-code/) |
-| TODO(me): the reviewer tool (ChatGPT / Codex / other?) | TODO(me) | Independent review of the plan and progress | TODO(me): export location, or a statement that it cannot export |
 
 **Export and redaction.** `python3 scripts/export_ai_logs.py` copies the Claude Code session JSONL files from `~/.claude/projects/<project>/` into `ai-logs/claude-code/`. It redacts credential patterns (API keys, tokens, bearer headers, private keys) and my personal email address. Nothing else is removed. The script fails if a credential-like string survives or a line stops being valid JSON. The first run found no credentials, only my email address. The fixture's synthetic `@example.invalid` addresses stay in the logs because they are part of the published fixtures.
 
@@ -30,8 +29,8 @@ The reviewer raised seven points. Claude checked each one against the spec and a
 - **Accepted:** move Docker earlier in the build order, since it is the largest schedule risk.
 - **Adapted:** instead of per-stream staging tables, Claude proposed staging directly into the per-stream revision tables and using the `batches` row as the commit marker. A staged batch is then invisible by construction: `batch <= B` filters it out for smaller cutoffs, and the gap check returns 65 for larger ones.
 
-### 3. External review of the plan, round 2 (TODO(me): tool) — suggestion corrected
-- **Corrected suggestion:** the reviewer said to replace the Claude log path with "the actual Codex log-export location". That was wrong for this project, because the implementation work happens in Claude Code. The Claude log path was kept, and exporting logs from the reviewer tool was added as a separate requirement.
+### 3. External review of the plan
+
 - **Accepted:** the canonical-hash rule was made explicit, and the gap check was documented as essential to correctness, not just input validation.
 - **Accepted:** Docker installation was moved out of the 0.25-hour setup step and treated as a prerequisite.
 - **Accepted:** logs must be exportable early. That is why `scripts/export_ai_logs.py` exists.
@@ -51,8 +50,19 @@ The reviewer raised seven points. Claude checked each one against the spec and a
   - Removing the unsupported-row dedupe is an equivalent mutant, because exceptions are collected in a set. The mutant was removed from the list, with a comment explaining why.
 - **Result:** 19/19 killed.
 
+### 6. Storage layer, CLI and durability tests (Claude Code) — AI tooling bug caught
+- **Produced:** `engine/store.py` (two-transaction ingest into SQLite WAL, snapshot inside one read transaction, atomic output), `engine/cli.py`, `./run` and 16 durability tests.
+- **Checked:**
+  - All 10 public queries match through `./run` against real persisted state.
+  - Grepping the state directory, including the WAL, finds no fixture names or emails.
+  - 20 random ingest orders with whole-file retries: after every single ingest, each query either exits 65 (batches 1..B incomplete) or equals the in-memory reference over the committed batches.
+  - Real subprocess failpoints exit 86 and replay commits once.
+  - A reader that started before an erasure commits keeps its snapshot.
+- **AI mistake caught:** when storage mutants were added, Claude also added unittest's fail-fast flag in the wrong position (`unittest -f discover`). Every mutant then "failed" because `discover` was treated as a missing test module, so the result showed 25/25 killed in 3 seconds. The implausible runtime prompted a check. The harness now runs an unmutated baseline first and prints the test that killed each mutant. After the fix: 25/25 killed, each with a named test. The earlier 19/19 result is unaffected, because it predates the flag.
+
 ## Suggestions rejected or corrected
-1. The reviewer's instruction to use the Codex log path, corrected as described in interaction 3.
+
 2. Claude's own first design, a generic `canon_json` staging table, rejected after review because it could retain PII (interaction 2).
 3. Claude's own first plan, a canonical hash column, replaced by typed-tuple equality (interaction 4).
 4. Claude's first mutant list included one mutant that can never be detected, so it was removed (interaction 5).
+5. Claude's mutation harness reported false kills because of a misplaced `-f` flag. The result was rejected and the harness fixed and hardened with a baseline run (interaction 6).
