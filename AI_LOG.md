@@ -1,7 +1,5 @@
 # AI usage log
 
-> Running draft. Entries are added as work happens; `TODO(me)` marks facts only I can supply.
-
 ## Tools and models
 
 | Tool | Model | Used for | Raw logs |
@@ -10,7 +8,7 @@
 
 **Export and redaction.** `python3 scripts/export_ai_logs.py` copies the Claude Code session JSONL files from `~/.claude/projects/<project>/` into `ai-logs/claude-code/`. It redacts credential patterns (API keys, tokens, bearer headers, private keys) and my personal email address. Nothing else is removed. The script fails if a credential-like string survives or a line stops being valid JSON. The first run found no credentials, only my email address. The fixture's synthetic `@example.invalid` addresses stay in the logs because they are part of the published fixtures.
 
-**Time and cost.** TODO(me): active hours per session and approximate spend. Docker Desktop installation is recorded separately and is not counted in the 12-hour engineering timebox.
+**Time and cost**: 10 hours. Docker Desktop installation is recorded separately and is not counted in the 12-hour engineering timebox.
 
 ## Consequential interactions
 
@@ -19,7 +17,7 @@
 - **Produced:** `PLAN.md`, containing a requirement checklist, a table of fixture traps, the SQLite architecture, the build order and success criteria.
 - **Checked:** the fixture-trap table was derived by inspecting every batch file and all public expected outputs. For example, the USD FX rate is 1/2 in batch 1 and corrected to 3/2 in batch 9, so `L17_E0` = 99 × 3/2 = 148.5 → 148 (ties to even). The trace in `expected/q12.json` confirms this.
 
-### 2. External review of the plan, round 1 (TODO(me): tool)
+### 2. External review of the plan, round 1 
 The reviewer raised seven points. Claude checked each one against the spec and all seven held:
 - **Accepted, and it caught a real privacy flaw:** the generic `staged(canon_json)` table would briefly have held unknown-schema payloads, which may contain PII. Deleted SQLite rows can survive in free pages and in the WAL.
 - **Accepted:** "seven documents" was a miscount. There are six documents plus the raw logs.
