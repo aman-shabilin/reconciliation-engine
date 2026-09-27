@@ -71,6 +71,17 @@ The reviewer challenged five points. All were accepted, one with an adaptation:
 - **Milestone wording:** Claude had said the gate "passes except Docker". That was overstated. The plan now separates a functional gate, which passes on the host, from a release gate that only a Linux container run can pass.
 - **Checked:** 80 tests pass. 28/28 mutants are killed, including three new ones: stale staged rows kept, a different committed file accepted, and a fingerprint that depends on line order.
 
+### 8. Scale, hard-kill testing and documentation (Claude Code): a false alarm investigated
+- **Produced:**
+  - `scripts/gen_scale.py`, `scripts/bench.py` and `scripts/crash_test.py`
+  - DESIGN, OPERATIONS, EVIDENCE and LIMITATIONS
+- **The first run of the crash test reported a violation.** Claude traced it before trusting either side: the *test* stored its reference snapshots by cutoff only, so the batch-12 setup (which commits erasures) overwrote the cutoff-11 reference with a masked version. The engine's unmasked output was correct for a state with no committed erasure. References are now keyed by (target batch, cutoff). After the fix, 30 trials and then 40 trials passed. The engine was not changed.
+- **Checked:**
+  - Every scale query equals the in-memory oracle.
+  - Exception counts confirm that every edge-case family appears in the scale data.
+  - Word limits: DESIGN 1,792 words with a 540-word scale note; OPERATIONS 1,113.
+  - EVIDENCE labels the container gate NOT MEASURED instead of inferring the result.
+
 ## Suggestions rejected or corrected
 
 2. Claude's own first design, a generic `canon_json` staging table, rejected after review because it could retain PII (interaction 2).
