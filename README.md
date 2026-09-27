@@ -3,8 +3,10 @@
 A local, recoverable settlement engine: ingests JSONL batches into durable SQLite state and answers
 knowledge-time/effective-time settlement queries with exact integer money. Python 3 standard library only.
 
-> Status: complete. Every check passes on the dev host and in the Linux container under the evaluation constraints
-> (read-only root, arbitrary UID, no network, 4 CPUs, 8 GiB). See [EVIDENCE.md](EVIDENCE.md) §7 and [LIMITATIONS.md](LIMITATIONS.md).
+> Status: the Linux container check (`scripts/container_check.py`) passed end to end at commit `9ee1ce5` with a clean
+> working tree, under read-only root, arbitrary UID, no network, 4 CPUs and 8 GiB ([EVIDENCE.md](EVIDENCE.md) §7). Commits
+> after `9ee1ce5` change only documentation, `evidence/` and the exported AI logs. Check with `git diff --stat 9ee1ce5 -- . ':!*.md' ':!evidence' ':!ai-logs'`.
+> Known boundaries: [LIMITATIONS.md](LIMITATIONS.md).
 
 **Documents:** [DESIGN.md](DESIGN.md) · [OPERATIONS.md](OPERATIONS.md) · [EVIDENCE.md](EVIDENCE.md) (raw outputs in
 [evidence/](evidence/)) · [LIMITATIONS.md](LIMITATIONS.md) · [AI_LOG.md](AI_LOG.md)

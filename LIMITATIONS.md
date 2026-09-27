@@ -3,7 +3,7 @@
 What is incomplete, unverified or deliberately out of scope, as of the latest commit.
 
 ## Verification boundaries
-- **The Linux container gate passed** (EVIDENCE.md §7) on Docker Desktop's WSL 2 Linux VM on the dev host. It covered an arbitrary UID, a read-only root, no network, and `--cpus 4 --memory 8g`. That is a cgroup-limited VM, not the reviewers' 4-core, 8 GiB bare host. CPU speed and disk fsync latency will differ. The measured margins are about 40× on ingest and 10× on snapshot time.
+- **The Linux container gate passed at commit `9ee1ce5`** (EVIDENCE.md §7) on Docker Desktop's WSL 2 Linux VM on the dev host. It covered an arbitrary UID, a read-only root, no network, and `--cpus 4 --memory 8g`. That is a cgroup-limited VM, not the reviewers' 4-core, 8 GiB bare host. CPU speed and disk fsync latency will differ. The measured margins are about 35× on ingest (4.9 s vs 180 s) and 9× on snapshot time (3.2 s vs 30 s).
 - **Durability was tested on Docker named volumes (ext4 in the VM) and on NTFS.** It was not tested on network filesystems, which SQLite WAL does not support. `/state` must be a local filesystem.
 - **Power-loss durability** (as opposed to a process kill) relies on SQLite `synchronous=FULL` and the storage honouring fsync. It was not tested by cutting power.
 

@@ -87,6 +87,15 @@ The reviewer challenged five points. All were accepted, one with an adaptation:
 - **Not accepted at face value:** the timed SIGKILL test passed, but its outcome counts showed no kill had landed between staging and commit on Linux. A late-window retry still hit parsing 28 of 30 times. Claude added `--kill-when-staged`, which polls the state read-only and kills the instant staged rows appear. That run produced 30/30 kills in the intended window, with no violations.
 - **Checked:** the docs changed from "NOT MEASURED" to the observed values. LIMITATIONS.md now states the remaining boundaries: a VM rather than a bare host, local filesystems only, and no power-loss testing.
 
+### 10. Overstated completion claim, corrected after the user challenged it
+- **What happened:** after the container check passed, Claude edited `container_check.py`, adding the state-triggered kill stage, and `crash_test.py`, adding `--window` and `--kill-when-staged`. It then wrote "Status: complete" in the README and presented "ALL CONTAINER CHECKS PASSED" as evidence. The committed scripts had never run end to end. Claude mentioned this only as a closing note. The user asked why the README claimed completion.
+- **Correction:**
+  - Re-ran the committed version end to end.
+  - The first re-run's header said "working tree DIRTY". Claude investigated rather than dismissing it. The cause was the capture itself: the shell redirect truncated the tracked evidence file before `git status` ran. Confirmed by `git status` (that file was the only change) and by hashing all 50 files in the tested image against the commit (all identical).
+  - Re-ran again with output captured outside the repo. The header now reads `commit 9ee1ce5, working tree clean`, and the run passed.
+  - EVIDENCE §7 now cites that run's figures, which differ slightly from the earlier run (for example, ingest 4.9 s rather than 4.1 s). Pre-commit runs are labelled as supporting evidence only. The README states the verified commit and gives a command to confirm that later commits touch only docs and evidence.
+- **Lesson applied:** a status claim must come from a run of the exact committed code. Evidence headers now record the commit and whether the tree was clean.
+
 ## Suggestions rejected or corrected
 
 2. Claude's own first design, a generic `canon_json` staging table, rejected after review because it could retain PII (interaction 2).
@@ -95,3 +104,4 @@ The reviewer challenged five points. All were accepted, one with an adaptation:
 5. Claude's mutation harness reported false kills because of a misplaced `-f` flag. The result was rejected and the harness fixed and hardened with a baseline run (interaction 6).
 6. Claude's checkpoint design, a raw-file SHA-256 with silent acceptance of a different file, was corrected after review (interaction 7).
 7. Claude's plan to ask the hiring team about unsupported-schema erasures was withdrawn, because the spec already settles it (interaction 7).
+8. Claude's "complete" / "all checks passed" claim for scripts that had changed since the run was corrected by re-running the committed code (interaction 10).

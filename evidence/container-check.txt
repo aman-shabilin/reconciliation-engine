@@ -1,408 +1,366 @@
 $ python scripts/container_check.py
-# run at 2026-09-27T06:54:20Z, Docker Desktop (WSL 2) on the Windows dev host
+# run at 2026-09-27T07:15:05Z, Docker Desktop (WSL 2) on the Windows dev host
+# git commit 9ee1ce5a3afdd50d80683001ebb2944c63f55f14, working tree clean (output captured outside the repo, copied in afterwards)
 
 === build ===
 $ docker version --format "client {{.Client.Version}}, server {{.Server.Version}} {{.Server.Os}}/{{.Server.Arch}}"
 client 29.8.0, server 29.8.0 linux/amd64
-    -> exit 0 (0.07s)
+    -> exit 0 (0.08s)
 $ docker build -t recon-engine:check C:\Users\aman_\Downloads\data-engineer-assessment
 #0 building with "desktop-linux" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 DONE 0.0s
-
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 1.56kB 0.0s done
+#1 transferring dockerfile: 1.56kB done
 #1 DONE 0.0s
 
 #2 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
-#2 ...
+#2 DONE 0.0s
 
-#3 [auth] library/python:pull token for registry-1.docker.io
+#3 [internal] load .dockerignore
+#3 transferring context: 146B done
 #3 DONE 0.0s
 
-#2 [internal] load metadata for docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
-#2 DONE 2.4s
-
-#4 [internal] load .dockerignore
-#4 transferring context: 146B done
+#4 [ 1/11] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+#4 resolve docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f 0.0s done
 #4 DONE 0.0s
 
-#5 [ 1/11] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
-#5 resolve docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f 0.0s done
-#5 ...
+#5 [internal] load build context
+#5 transferring context: 2.06kB done
+#5 DONE 0.0s
 
-#6 [internal] load build context
-#6 transferring context: 228.94kB 0.0s done
-#6 DONE 0.1s
+#6 [ 4/11] COPY tests/ /app/tests/
+#6 CACHED
 
-#5 [ 1/11] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
-#5 sha256:b0dc7f87bef15c2536cb182d6c48b52f90a0522884ec9eb222f833fa97ffebf0 0B / 12.12MB 0.2s
-#5 sha256:06ad939ed42b51caafb25b14810875d14e0ee0c441d3e2e5e46475fb8c150bca 0B / 249B 0.2s
-#5 sha256:3764a9a7d1e8a98213ab2201a41dbf3da9c60240ea35a5ea96ab994555070a70 0B / 1.29MB 0.2s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 0B / 29.83MB 0.2s
-#5 sha256:b0dc7f87bef15c2536cb182d6c48b52f90a0522884ec9eb222f833fa97ffebf0 2.10MB / 12.12MB 0.5s
-#5 sha256:b0dc7f87bef15c2536cb182d6c48b52f90a0522884ec9eb222f833fa97ffebf0 4.19MB / 12.12MB 0.6s
-#5 sha256:06ad939ed42b51caafb25b14810875d14e0ee0c441d3e2e5e46475fb8c150bca 249B / 249B 0.5s done
-#5 sha256:b0dc7f87bef15c2536cb182d6c48b52f90a0522884ec9eb222f833fa97ffebf0 6.29MB / 12.12MB 0.8s
-#5 sha256:b0dc7f87bef15c2536cb182d6c48b52f90a0522884ec9eb222f833fa97ffebf0 10.49MB / 12.12MB 0.9s
-#5 sha256:3764a9a7d1e8a98213ab2201a41dbf3da9c60240ea35a5ea96ab994555070a70 1.29MB / 1.29MB 0.8s done
-#5 sha256:b0dc7f87bef15c2536cb182d6c48b52f90a0522884ec9eb222f833fa97ffebf0 12.12MB / 12.12MB 0.9s done
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 2.10MB / 29.83MB 1.1s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 4.19MB / 29.83MB 1.2s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 7.34MB / 29.83MB 1.4s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 9.44MB / 29.83MB 1.5s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 11.53MB / 29.83MB 1.7s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 13.63MB / 29.83MB 1.8s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 15.73MB / 29.83MB 2.0s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 17.83MB / 29.83MB 2.1s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 19.92MB / 29.83MB 2.3s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 22.02MB / 29.83MB 2.4s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 24.12MB / 29.83MB 2.6s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 26.21MB / 29.83MB 2.7s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 28.31MB / 29.83MB 2.9s
-#5 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 29.83MB / 29.83MB 3.0s done
-#5 extracting sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8
-#5 extracting sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 0.7s done
-#5 DONE 3.7s
+#7 [ 9/11] COPY tools/ /app/tools/
+#7 CACHED
 
-#5 [ 1/11] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
-#5 extracting sha256:3764a9a7d1e8a98213ab2201a41dbf3da9c60240ea35a5ea96ab994555070a70 0.1s done
-#5 DONE 3.8s
+#8 [ 7/11] COPY queries/ /app/queries/
+#8 CACHED
 
-#5 [ 1/11] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
-#5 extracting sha256:b0dc7f87bef15c2536cb182d6c48b52f90a0522884ec9eb222f833fa97ffebf0
-#5 extracting sha256:b0dc7f87bef15c2536cb182d6c48b52f90a0522884ec9eb222f833fa97ffebf0 0.4s done
-#5 DONE 4.2s
+#9 [10/11] COPY run docker-entrypoint.sh /app/
+#9 CACHED
 
-#5 [ 1/11] FROM docker.io/library/python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
-#5 extracting sha256:06ad939ed42b51caafb25b14810875d14e0ee0c441d3e2e5e46475fb8c150bca 0.0s done
-#5 DONE 4.2s
+#10 [ 2/11] WORKDIR /app
+#10 CACHED
 
-#7 [ 2/11] WORKDIR /app
-#7 DONE 0.2s
+#11 [ 8/11] COPY expected/ /app/expected/
+#11 CACHED
 
-#8 [ 3/11] COPY engine/ /app/engine/
-#8 DONE 0.0s
+#12 [ 5/11] COPY scripts/mutants.py scripts/bench.py scripts/crash_test.py /app/scripts/
+#12 CACHED
 
-#9 [ 4/11] COPY tests/ /app/tests/
-#9 DONE 0.0s
+#13 [ 3/11] COPY engine/ /app/engine/
+#13 CACHED
 
-#10 [ 5/11] COPY scripts/mutants.py scripts/bench.py scripts/crash_test.py /app/scripts/
-#10 DONE 0.0s
+#14 [ 6/11] COPY data/ /app/data/
+#14 CACHED
 
-#11 [ 6/11] COPY data/ /app/data/
-#11 DONE 0.0s
+#15 [11/11] RUN chmod -R a+rX,go-w /app && chmod 0755 /app/run /app/docker-entrypoint.sh  && mkdir -p /state /out && chmod 1777 /state /out
+#15 CACHED
 
-#12 [ 7/11] COPY queries/ /app/queries/
-#12 DONE 0.0s
+#16 exporting to image
+#16 exporting layers done
+#16 exporting manifest sha256:7a8ad5dff4a185ad2cc226d3ecc0e262b1566967af96f5861728784a68aa232a done
+#16 exporting config sha256:2b6717717d4185d9b8dbab350150ac5a39d794120e97ce9e7d76e230975fd552 done
+#16 exporting attestation manifest sha256:711c25bbc07650f4a611b8b50e16e221d1274ead38cb6ac86eaf434d1e9d9302 0.0s done
+#16 exporting manifest list sha256:997427913e3610ca16d54b9c1842946e6709d9b8cf819d8e68efe5552f5fb2ff done
+#16 naming to docker.io/library/recon-engine:check
+#16 naming to docker.io/library/recon-engine:check done
+#16 unpacking to docker.io/library/recon-engine:check done
+#16 DONE 0.1s
 
-#13 [ 8/11] COPY expected/ /app/expected/
-#13 DONE 0.0s
-
-#14 [ 9/11] COPY tools/ /app/tools/
-#14 DONE 0.0s
-
-#15 [10/11] COPY run docker-entrypoint.sh /app/
-#15 DONE 0.0s
-
-#16 [11/11] RUN chmod -R a+rX,go-w /app && chmod 0755 /app/run /app/docker-entrypoint.sh  && mkdir -p /state /out && chmod 1777 /state /out
-#16 DONE 0.2s
-
-#17 exporting to image
-#17 exporting layers
-#17 exporting layers 0.3s done
-#17 exporting manifest sha256:a97924fb20bb3cf4b854e0b3dd251919f6feb56fb02497b2e16a5b1a5cf26a80 0.0s done
-#17 exporting config sha256:092e98ed4b15a50ab37dc52a3f16d43e5ccb896b85c1fc2d7b7358dd47a9c554 done
-#17 exporting attestation manifest sha256:479b94b1fdaf44738bf7441e8dcb85b54241bfee68ea286c53ea2189c2ea3616 0.0s done
-#17 exporting manifest list sha256:1603c7a13ccdb1377c6612d2c25a03061697300d631c84304ad68ec820775261 done
-#17 naming to docker.io/library/recon-engine:check done
-#17 unpacking to docker.io/library/recon-engine:check 0.1s done
-#17 DONE 0.5s
-    -> exit 0 (8.39s)
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/0esbafm99451kp2n18btxo9hw
+    -> exit 0 (0.55s)
 $ docker run --rm --read-only --user 23456:23456 --network none recon-engine:check python3 -c "import sys,sqlite3;print(sys.version.split()[0],sqlite3.sqlite_version)"
-    -> exit 0 (0.28s)
+    -> exit 0 (0.35s)
     python/sqlite in image: 3.12.14 3.46.1
 
 === self-test suite (read-only, arbitrary uid, no network) ===
 $ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp recon-engine:check selftest
     ................................................................................
     ----------------------------------------------------------------------
-    Ran 80 tests in 10.246s
+    Ran 80 tests in 11.217s
     
     OK
-    -> exit 0 (10.74s)
-    Ran 80 tests in 10.246s | OK
+    -> exit 0 (11.84s)
+    Ran 80 tests in 11.217s | OK
 
 === /app is not writable at runtime ===
 $ docker run --rm --user 23456:23456 recon-engine:check sh -c "touch /app/x"
     touch: cannot touch '/app/x': Permission denied
-    -> exit 1 (0.32s)
+    -> exit 1 (0.35s)
 $ docker run --rm --read-only --user 23456:23456 recon-engine:check sh -c "test -x /app/run && test -r /app/engine/cli.py"
-    -> exit 0 (0.35s)
+    -> exit 0 (0.34s)
 
 === public fixtures end to end (one container per command) ===
-$ docker volume create recon-check-state-82e1c792
-    -> exit 0 (0.04s)
-$ docker volume create recon-check-out-82e1c792
-    -> exit 0 (0.04s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_01.jsonl --state /state
+$ docker volume create recon-check-state-512771b3
+    -> exit 0 (0.05s)
+$ docker volume create recon-check-out-512771b3
+    -> exit 0 (0.06s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_01.jsonl --state /state
     engine: ingest batch 1: committed 139 rows (fx 16, merchants 100, profiles_discarded 23)
-    -> exit 0 (0.41s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_02.jsonl --state /state
+    -> exit 0 (0.46s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_02.jsonl --state /state
     engine: ingest batch 2: committed 16 rows (ledger 16)
-    -> exit 0 (0.43s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
+    -> exit 0 (0.48s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
     engine: ingest batch 3: committed 11 rows (ledger 10, unsupported 1)
-    -> exit 0 (0.42s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_04.jsonl --state /state
-    engine: ingest batch 4: committed 10 rows (ledger 9, merchants 1)
-    -> exit 0 (0.40s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_05.jsonl --state /state
-    engine: ingest batch 5: committed 18 rows (fx 2, ledger 14, merchants 2)
-    -> exit 0 (0.42s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_06.jsonl --state /state
-    engine: ingest batch 6: committed 19 rows (ledger 19)
     -> exit 0 (0.43s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_07.jsonl --state /state
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_04.jsonl --state /state
+    engine: ingest batch 4: committed 10 rows (ledger 9, merchants 1)
+    -> exit 0 (0.43s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_05.jsonl --state /state
+    engine: ingest batch 5: committed 18 rows (fx 2, ledger 14, merchants 2)
+    -> exit 0 (0.47s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_06.jsonl --state /state
+    engine: ingest batch 6: committed 19 rows (ledger 19)
+    -> exit 0 (0.46s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_07.jsonl --state /state
     engine: ingest batch 7: committed 7 rows (ledger 6, merchants 1)
     -> exit 0 (0.42s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_08.jsonl --state /state
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_08.jsonl --state /state
     engine: ingest batch 8: committed 4 rows (ledger 4)
-    -> exit 0 (0.42s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_09.jsonl --state /state
+    -> exit 0 (0.43s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_09.jsonl --state /state
     engine: ingest batch 9: committed 1 rows (fx 1)
-    -> exit 0 (0.41s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_10.jsonl --state /state
+    -> exit 0 (0.52s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_10.jsonl --state /state
     engine: ingest batch 10: committed 2 rows (erasures 2)
-    -> exit 0 (0.42s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_11.jsonl --state /state
+    -> exit 0 (0.62s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_11.jsonl --state /state
     engine: ingest batch 11: committed 1 rows (profiles_discarded 1)
-    -> exit 0 (0.40s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check ingest --input /data/batch_12.jsonl --state /state
+    -> exit 0 (0.51s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check ingest --input /data/batch_12.jsonl --state /state
     engine: ingest batch 12: committed 2 rows (ledger 1, unsupported 1)
-    -> exit 0 (0.41s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/day2.json --state /state --out /out/day2.json
+    -> exit 0 (0.50s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/day2.json --state /state --out /out/day2.json
     engine: snapshot day2: 1 settlements, 13 trace, 4 exceptions
-    -> exit 0 (0.41s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/day2.json
-    -> exit 0 (0.34s)
+    -> exit 0 (0.48s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/day2.json
+    -> exit 0 (0.37s)
     day2: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/empty.json --state /state --out /out/empty.json
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/empty.json --state /state --out /out/empty.json
     engine: snapshot empty: 0 settlements, 0 trace, 4 exceptions
-    -> exit 0 (0.42s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/empty.json
-    -> exit 0 (0.35s)
+    -> exit 0 (0.43s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/empty.json
+    -> exit 0 (0.37s)
     empty: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/q01.json --state /state --out /out/q01.json
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/q01.json --state /state --out /out/q01.json
     engine: snapshot q01: 0 settlements, 0 trace, 0 exceptions
-    -> exit 0 (0.41s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/q01.json
-    -> exit 0 (0.33s)
+    -> exit 0 (0.47s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/q01.json
+    -> exit 0 (0.40s)
     q01: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/q02.json --state /state --out /out/q02.json
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/q02.json --state /state --out /out/q02.json
     engine: snapshot q02: 5 settlements, 16 trace, 0 exceptions
-    -> exit 0 (0.40s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/q02.json
-    -> exit 0 (0.33s)
+    -> exit 0 (0.51s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/q02.json
+    -> exit 0 (0.37s)
     q02: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
     engine: snapshot q03: 6 settlements, 21 trace, 4 exceptions
-    -> exit 0 (0.40s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/q03.json
-    -> exit 0 (0.33s)
-    q03: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/q04.json --state /state --out /out/q04.json
-    engine: snapshot q04: 5 settlements, 14 trace, 18 exceptions
-    -> exit 0 (0.42s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/q04.json
-    -> exit 0 (0.36s)
-    q04: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/q05.json --state /state --out /out/q05.json
-    engine: snapshot q05: 7 settlements, 18 trace, 28 exceptions
+    -> exit 0 (0.46s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/q03.json
     -> exit 0 (0.41s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/q05.json
+    q03: matches expected
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/q04.json --state /state --out /out/q04.json
+    engine: snapshot q04: 5 settlements, 14 trace, 18 exceptions
+    -> exit 0 (0.45s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/q04.json
+    -> exit 0 (0.35s)
+    q04: matches expected
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/q05.json --state /state --out /out/q05.json
+    engine: snapshot q05: 7 settlements, 18 trace, 28 exceptions
+    -> exit 0 (0.43s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/q05.json
     -> exit 0 (0.36s)
     q05: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/q07.json --state /state --out /out/q07.json
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/q07.json --state /state --out /out/q07.json
     engine: snapshot q07: 14 settlements, 59 trace, 5 exceptions
-    -> exit 0 (0.42s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/q07.json
-    -> exit 0 (0.35s)
+    -> exit 0 (0.47s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/q07.json
+    -> exit 0 (0.36s)
     q07: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/q09.json --state /state --out /out/q09.json
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/q09.json --state /state --out /out/q09.json
     engine: snapshot q09: 14 settlements, 59 trace, 5 exceptions
-    -> exit 0 (0.42s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/q09.json
-    -> exit 0 (0.35s)
+    -> exit 0 (0.45s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/q09.json
+    -> exit 0 (0.36s)
     q09: matches expected
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-82e1c792:/state -v recon-check-out-82e1c792:/out recon-engine:check snapshot --query /queries/q12.json --state /state --out /out/q12.json
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-state-512771b3:/state -v recon-check-out-512771b3:/out recon-engine:check snapshot --query /queries/q12.json --state /state --out /out/q12.json
     engine: snapshot q12: 14 settlements, 60 trace, 6 exceptions
-    -> exit 0 (0.41s)
-$ docker run --rm --user 23456:23456 -v recon-check-out-82e1c792:/out recon-engine:check cat /out/q12.json
-    -> exit 0 (0.35s)
+    -> exit 0 (0.45s)
+$ docker run --rm --user 23456:23456 -v recon-check-out-512771b3:/out recon-engine:check cat /out/q12.json
+    -> exit 0 (0.40s)
     q12: matches expected
 
 === privacy: no names/emails anywhere in state (db, -wal, -shm) ===
-$ docker run --rm --user 23456:23456 -v recon-check-state-82e1c792:/state recon-engine:check sh -c "ls -la /state && ! grep -rlaE 'SYNTHETIC|example\.invalid' /state"
-    -> exit 0 (0.35s)
+$ docker run --rm --user 23456:23456 -v recon-check-state-512771b3:/state recon-engine:check sh -c "ls -la /state && ! grep -rlaE 'SYNTHETIC|example\.invalid' /state"
+    -> exit 0 (0.34s)
     total 120
-    drwxrwxrwt 2 root  root   4096 Sep 27 06:54 .
-    drwxr-xr-x 1 root  root   4096 Sep 27 06:54 ..
-    -rw-r--r-- 1 23456 23456 81920 Sep 27 06:54 engine.db
-    -rw-r--r-- 1 23456 23456 32768 Sep 27 06:54 engine.db-shm
-    -rw-r--r-- 1 23456 23456     0 Sep 27 06:54 engine.db-wal
+    drwxrwxrwt 2 root  root   4096 Sep 27 07:15 .
+    drwxr-xr-x 1 root  root   4096 Sep 27 07:15 ..
+    -rw-r--r-- 1 23456 23456 81920 Sep 27 07:15 engine.db
+    -rw-r--r-- 1 23456 23456 32768 Sep 27 07:15 engine.db-shm
+    -rw-r--r-- 1 23456 23456     0 Sep 27 07:15 engine.db-wal
 
 === failpoint after-stage: exit 86, invisible, replay commits once ===
-$ docker volume create recon-check-fp-after-stage-82e1c792
-    -> exit 0 (0.04s)
-$ docker volume create recon-check-fp-out-after-stage-82e1c792
-    -> exit 0 (0.04s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check ingest --input /data/batch_01.jsonl --state /state
+$ docker volume create recon-check-fp-after-stage-512771b3
+    -> exit 0 (0.05s)
+$ docker volume create recon-check-fp-out-after-stage-512771b3
+    -> exit 0 (0.05s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check ingest --input /data/batch_01.jsonl --state /state
     engine: ingest batch 1: committed 139 rows (fx 16, merchants 100, profiles_discarded 23)
-    -> exit 0 (0.42s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check ingest --input /data/batch_02.jsonl --state /state
+    -> exit 0 (0.49s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check ingest --input /data/batch_02.jsonl --state /state
     engine: ingest batch 2: committed 16 rows (ledger 16)
-    -> exit 0 (0.42s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state --failpoint after-stage
+    -> exit 0 (0.53s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state --failpoint after-stage
     engine: ingest batch 3: failpoint after-stage
-    -> exit 86 (0.40s)
-$ docker run --rm --user 23456:23456 -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check sh -c "printf 'previous bytes' > /out/q03.json"
-    -> exit 0 (0.35s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
-    engine: snapshot q03: cutoff 3 requires batches 1..3; 2 committed; existing output left untouched
-    -> exit 65 (0.43s)
-$ docker run --rm --user 23456:23456 -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check cat /out/q03.json
-    -> exit 0 (0.34s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check snapshot --query /queries/q02.json --state /state --out /out/q02.json
-    engine: snapshot q02: 5 settlements, 16 trace, 0 exceptions
-    -> exit 0 (0.41s)
-$ docker run --rm --user 23456:23456 -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check cat /out/q02.json
-    -> exit 0 (0.36s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
-    engine: ingest batch 3: committed 11 rows (ledger 10, unsupported 1)
-    -> exit 0 (0.41s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
-    engine: ingest batch 3: already committed; no-op
-    -> exit 0 (0.42s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state --failpoint after-stage
-    engine: ingest batch 3: already committed; no-op
-    -> exit 0 (0.40s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-82e1c792:/state -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
-    engine: snapshot q03: 6 settlements, 21 trace, 4 exceptions
+    -> exit 86 (0.46s)
+$ docker run --rm --user 23456:23456 -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check sh -c "printf 'previous bytes' > /out/q03.json"
     -> exit 0 (0.39s)
-$ docker run --rm --user 23456:23456 -v recon-check-fp-out-after-stage-82e1c792:/out recon-engine:check cat /out/q03.json
-    -> exit 0 (0.35s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
+    engine: snapshot q03: cutoff 3 requires batches 1..3; 2 committed; existing output left untouched
+    -> exit 65 (0.44s)
+$ docker run --rm --user 23456:23456 -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check cat /out/q03.json
+    -> exit 0 (0.44s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check snapshot --query /queries/q02.json --state /state --out /out/q02.json
+    engine: snapshot q02: 5 settlements, 16 trace, 0 exceptions
+    -> exit 0 (0.45s)
+$ docker run --rm --user 23456:23456 -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check cat /out/q02.json
+    -> exit 0 (0.37s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
+    engine: ingest batch 3: committed 11 rows (ledger 10, unsupported 1)
+    -> exit 0 (0.44s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
+    engine: ingest batch 3: already committed; no-op
+    -> exit 0 (0.47s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state --failpoint after-stage
+    engine: ingest batch 3: already committed; no-op
+    -> exit 0 (0.44s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-after-stage-512771b3:/state -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
+    engine: snapshot q03: 6 settlements, 21 trace, 4 exceptions
+    -> exit 0 (0.44s)
+$ docker run --rm --user 23456:23456 -v recon-check-fp-out-after-stage-512771b3:/out recon-engine:check cat /out/q03.json
+    -> exit 0 (0.42s)
     recovered; q02/q03 match the in-memory oracle
 
 === failpoint before-commit: exit 86, invisible, replay commits once ===
-$ docker volume create recon-check-fp-before-commit-82e1c792
-    -> exit 0 (0.04s)
-$ docker volume create recon-check-fp-out-before-commit-82e1c792
-    -> exit 0 (0.04s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check ingest --input /data/batch_01.jsonl --state /state
+$ docker volume create recon-check-fp-before-commit-512771b3
+    -> exit 0 (0.05s)
+$ docker volume create recon-check-fp-out-before-commit-512771b3
+    -> exit 0 (0.05s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check ingest --input /data/batch_01.jsonl --state /state
     engine: ingest batch 1: committed 139 rows (fx 16, merchants 100, profiles_discarded 23)
-    -> exit 0 (0.43s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check ingest --input /data/batch_02.jsonl --state /state
+    -> exit 0 (0.45s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check ingest --input /data/batch_02.jsonl --state /state
     engine: ingest batch 2: committed 16 rows (ledger 16)
-    -> exit 0 (0.43s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state --failpoint before-commit
+    -> exit 0 (0.56s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state --failpoint before-commit
     engine: ingest batch 3: failpoint before-commit
-    -> exit 86 (0.39s)
-$ docker run --rm --user 23456:23456 -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check sh -c "printf 'previous bytes' > /out/q03.json"
-    -> exit 0 (0.35s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
+    -> exit 86 (0.46s)
+$ docker run --rm --user 23456:23456 -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check sh -c "printf 'previous bytes' > /out/q03.json"
+    -> exit 0 (0.39s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
     engine: snapshot q03: cutoff 3 requires batches 1..3; 2 committed; existing output left untouched
-    -> exit 65 (0.41s)
-$ docker run --rm --user 23456:23456 -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check cat /out/q03.json
+    -> exit 65 (0.46s)
+$ docker run --rm --user 23456:23456 -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check cat /out/q03.json
     -> exit 0 (0.38s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check snapshot --query /queries/q02.json --state /state --out /out/q02.json
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check snapshot --query /queries/q02.json --state /state --out /out/q02.json
     engine: snapshot q02: 5 settlements, 16 trace, 0 exceptions
-    -> exit 0 (0.41s)
-$ docker run --rm --user 23456:23456 -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check cat /out/q02.json
-    -> exit 0 (0.36s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
+    -> exit 0 (0.47s)
+$ docker run --rm --user 23456:23456 -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check cat /out/q02.json
+    -> exit 0 (0.37s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
     engine: ingest batch 3: committed 11 rows (ledger 10, unsupported 1)
-    -> exit 0 (0.40s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
+    -> exit 0 (0.44s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state
     engine: ingest batch 3: already committed; no-op
-    -> exit 0 (0.41s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state --failpoint before-commit
+    -> exit 0 (0.43s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check ingest --input /data/batch_03.jsonl --state /state --failpoint before-commit
     engine: ingest batch 3: already committed; no-op
-    -> exit 0 (0.41s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-82e1c792:/state -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
+    -> exit 0 (0.44s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-fp-before-commit-512771b3:/state -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check snapshot --query /queries/q03.json --state /state --out /out/q03.json
     engine: snapshot q03: 6 settlements, 21 trace, 4 exceptions
-    -> exit 0 (0.40s)
-$ docker run --rm --user 23456:23456 -v recon-check-fp-out-before-commit-82e1c792:/out recon-engine:check cat /out/q03.json
+    -> exit 0 (0.44s)
+$ docker run --rm --user 23456:23456 -v recon-check-fp-out-before-commit-512771b3:/out recon-engine:check cat /out/q03.json
     -> exit 0 (0.34s)
     recovered; q02/q03 match the in-memory oracle
 
 === gap rejection preserves existing output byte for byte ===
-$ docker volume create recon-check-gap-82e1c792
-    -> exit 0 (0.04s)
-$ docker volume create recon-check-gap-out-82e1c792
-    -> exit 0 (0.04s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-gap-82e1c792:/state -v recon-check-gap-out-82e1c792:/out recon-engine:check ingest --input /data/batch_01.jsonl --state /state
+$ docker volume create recon-check-gap-512771b3
+    -> exit 0 (0.05s)
+$ docker volume create recon-check-gap-out-512771b3
+    -> exit 0 (0.05s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-gap-512771b3:/state -v recon-check-gap-out-512771b3:/out recon-engine:check ingest --input /data/batch_01.jsonl --state /state
     engine: ingest batch 1: committed 139 rows (fx 16, merchants 100, profiles_discarded 23)
-    -> exit 0 (0.40s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-gap-82e1c792:/state -v recon-check-gap-out-82e1c792:/out recon-engine:check ingest --input /data/batch_02.jsonl --state /state
+    -> exit 0 (0.47s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-gap-512771b3:/state -v recon-check-gap-out-512771b3:/out recon-engine:check ingest --input /data/batch_02.jsonl --state /state
     engine: ingest batch 2: committed 16 rows (ledger 16)
-    -> exit 0 (0.41s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-gap-82e1c792:/state -v recon-check-gap-out-82e1c792:/out recon-engine:check ingest --input /data/batch_04.jsonl --state /state
+    -> exit 0 (0.48s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-gap-512771b3:/state -v recon-check-gap-out-512771b3:/out recon-engine:check ingest --input /data/batch_04.jsonl --state /state
     engine: ingest batch 4: committed 10 rows (ledger 9, merchants 1)
-    -> exit 0 (0.40s)
-$ docker run --rm --user 23456:23456 -v recon-check-gap-out-82e1c792:/out recon-engine:check sh -c "head -c 4096 /dev/urandom > /out/q04.json && sha256sum /out/q04.json"
-    -> exit 0 (0.36s)
-$ docker run --rm --user 23456:23456 -v recon-check-gap-out-82e1c792:/out recon-engine:check sha256sum /out/q04.json
-    -> exit 0 (0.37s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-gap-82e1c792:/state -v recon-check-gap-out-82e1c792:/out recon-engine:check snapshot --query /queries/q04.json --state /state --out /out/q04.json
+    -> exit 0 (0.46s)
+$ docker run --rm --user 23456:23456 -v recon-check-gap-out-512771b3:/out recon-engine:check sh -c "head -c 4096 /dev/urandom > /out/q04.json && sha256sum /out/q04.json"
+    -> exit 0 (0.38s)
+$ docker run --rm --user 23456:23456 -v recon-check-gap-out-512771b3:/out recon-engine:check sha256sum /out/q04.json
+    -> exit 0 (0.39s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\data,dst=/data,readonly --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\queries,dst=/queries,readonly -v recon-check-gap-512771b3:/state -v recon-check-gap-out-512771b3:/out recon-engine:check snapshot --query /queries/q04.json --state /state --out /out/q04.json
     engine: snapshot q04: cutoff 4 requires batches 1..4; 3 committed; existing output left untouched
-    -> exit 65 (0.40s)
-$ docker run --rm --user 23456:23456 -v recon-check-gap-out-82e1c792:/out recon-engine:check sha256sum /out/q04.json
-    -> exit 0 (0.31s)
-    sha256 unchanged: 453f1c086b634ee1da833ee7b6e5dbc90f5437c02edb0ac2166fcde5c3571350
+    -> exit 65 (0.44s)
+$ docker run --rm --user 23456:23456 -v recon-check-gap-out-512771b3:/out recon-engine:check sha256sum /out/q04.json
+    -> exit 0 (0.37s)
+    sha256 unchanged: 85ecb08dc7535d572833130ee7cf5dbf8eaec5afe0973f621dfb50c3e9cbad4e
 
 === scale benchmark at the evaluation limits (--cpus 4 --memory 8g) ===
-$ docker volume create recon-check-scale-state-82e1c792
-    -> exit 0 (0.04s)
-$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --cpus 4 --memory 8g --memory-swap 8g --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\scale,dst=/scale,readonly -v recon-check-scale-state-82e1c792:/state recon-engine:check python3 /app/scripts/bench.py --data /scale --state /state/bench --verify
-    -> exit 0 (19.14s)
+$ docker volume create recon-check-scale-state-512771b3
+    -> exit 0 (0.05s)
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp --cpus 4 --memory 8g --memory-swap 8g --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\scale,dst=/scale,readonly -v recon-check-scale-state-512771b3:/state recon-engine:check python3 /app/scripts/bench.py --data /scale --state /state/bench --verify
+    -> exit 0 (20.57s)
 host: {"platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.41", "machine": "x86_64", "processor": "n/a", "cpus": 12, "ram_gib": 15.6, "python": "3.12.14", "sqlite": "3.46.1"}
 input: 12 batches, 55.0 MiB
 
 | batch | rows | exit | wall s | peak RSS |
 |---|---:|---:|---:|---:|
-| batch_01.jsonl | 6055 | 0 | 0.19 | 28 MiB |
-| batch_02.jsonl | 20264 | 0 | 0.33 | 46 MiB |
-| batch_03.jsonl | 20439 | 0 | 0.33 | 47 MiB |
-| batch_04.jsonl | 20864 | 0 | 0.34 | 47 MiB |
-| batch_05.jsonl | 20818 | 0 | 0.34 | 47 MiB |
-| batch_06.jsonl | 21106 | 0 | 0.35 | 47 MiB |
-| batch_07.jsonl | 21522 | 0 | 0.37 | 48 MiB |
-| batch_08.jsonl | 22068 | 0 | 0.39 | 48 MiB |
-| batch_09.jsonl | 22558 | 0 | 0.40 | 49 MiB |
-| batch_10.jsonl | 23368 | 0 | 0.42 | 50 MiB |
-| batch_11.jsonl | 24513 | 0 | 0.43 | 51 MiB |
-| batch_12.jsonl | 4887 | 0 | 0.22 | 29 MiB |
+| batch_01.jsonl | 6055 | 0 | 0.21 | 28 MiB |
+| batch_02.jsonl | 20264 | 0 | 0.38 | 47 MiB |
+| batch_03.jsonl | 20439 | 0 | 0.35 | 47 MiB |
+| batch_04.jsonl | 20864 | 0 | 0.49 | 47 MiB |
+| batch_05.jsonl | 20818 | 0 | 0.39 | 47 MiB |
+| batch_06.jsonl | 21106 | 0 | 0.38 | 48 MiB |
+| batch_07.jsonl | 21522 | 0 | 0.41 | 48 MiB |
+| batch_08.jsonl | 22068 | 0 | 0.41 | 48 MiB |
+| batch_09.jsonl | 22558 | 0 | 0.48 | 49 MiB |
+| batch_10.jsonl | 23368 | 0 | 0.70 | 50 MiB |
+| batch_11.jsonl | 24513 | 0 | 0.47 | 51 MiB |
+| batch_12.jsonl | 4887 | 0 | 0.26 | 29 MiB |
 
-ingest total 4.1 s, max peak RSS 51 MiB, state 24.4 MiB
+ingest total 4.9 s, max peak RSS 51 MiB, state 24.4 MiB
 
 | query | exit | wall s | peak RSS | settlements | trace | exceptions | verified |
 |---|---:|---:|---:|---:|---:|---:|---|
-| query_early_cutoff | 0 | 1.56 | 235 MiB | 5973 | 97183 | 822 | yes |
-| query_empty | 0 | 1.02 | 264 MiB | 0 | 0 | 316 | yes |
-| query_full | 0 | 3.08 | 439 MiB | 6020 | 194905 | 1214 | yes |
-| query_hot_day | 0 | 1.44 | 372 MiB | 104 | 51497 | 385 | yes |
+| query_early_cutoff | 0 | 1.62 | 235 MiB | 5973 | 97183 | 822 | yes |
+| query_empty | 0 | 1.06 | 264 MiB | 0 | 0 | 316 | yes |
+| query_full | 0 | 3.23 | 438 MiB | 6020 | 194905 | 1214 | yes |
+| query_hot_day | 0 | 1.50 | 372 MiB | 104 | 51497 | 385 | yes |
 
 final state 24.4 MiB
 
 
 === hard-kill crash test with SIGKILL (Linux) ===
 $ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp:size=2g --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\scale,dst=/scale,readonly recon-engine:check python3 /app/scripts/crash_test.py --data /scale --trials 30 --seed 7
-    -> exit 0 (150.14s)
-trial 29 batch 12 delay 0.13s killed before staging  ok
+    -> exit 0 (155.80s)
+trial 29 batch 12 delay 0.14s killed before staging  ok
 
-30 trials, no violations. outcomes: {'killed before staging': 28, 'finished': 2}
+30 trials, no violations. outcomes: {'killed before staging': 27, 'finished': 2, 'killed after staging': 1}
+
+=== SIGKILL exactly between staging and commit (state-polling kill) ===
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp:size=2g --mount type=bind,src=C:\Users\aman_\Downloads\data-engineer-assessment\scale,dst=/scale,readonly recon-engine:check python3 /app/scripts/crash_test.py --data /scale --trials 20 --seed 11 --kill-when-staged
+    -> exit 0 (111.63s)
+trial 19 batch 12 delay 0.00s killed after staging   ok
+
+20 trials, no violations. outcomes: {'killed after staging': 20}
 
 ALL CONTAINER CHECKS PASSED
 exit 0

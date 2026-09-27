@@ -130,7 +130,7 @@ Peak RSS is measured per engine process (`PeakWorkingSetSize` on Windows, `wait4
 $ python scripts/container_check.py
 ```
 
-Raw output: [evidence/container-check.txt](evidence/container-check.txt) (2026-09-27, `ALL CONTAINER CHECKS PASSED`, exit 0).
+Raw output: [evidence/container-check.txt](evidence/container-check.txt). It was produced by **commit `9ee1ce5` with a clean working tree**, as recorded in the file header, at 2026-09-27T07:15Z, and ends `ALL CONTAINER CHECKS PASSED`, exit 0. [evidence/image-matches-commit.txt](evidence/image-matches-commit.txt) shows that all 50 files in the tested image's `/app` are byte-identical to that commit.
 
 **Environment:**
 - Docker 29.8.0 (Docker Desktop, WSL 2 kernel 6.18, x86_64) on the dev host.
@@ -140,26 +140,27 @@ Raw output: [evidence/container-check.txt](evidence/container-check.txt) (2026-0
 
 | Check | Observed |
 |---|---|
-| Self-test suite in the image (`selftest`) | `Ran 80 tests in 10.246s … OK`, **0 skipped**: the POSIX `run` adapter test executed |
+| Self-test suite in the image (`selftest`) | `Ran 80 tests in 11.217s … OK`, **0 skipped**: the POSIX `run` adapter test executed |
 | `/app` immutable for the runtime user | `touch /app/x` exits 1; `/app/run` is executable and the sources are readable |
 | Public fixtures, 12 ingests and 10 snapshots | **all 10 match `expected/`** |
 | PII scan of the state volume | no match in `engine.db`, `-wal` or `-shm`; files owned by UID 23456 |
 | `--failpoint after-stage` / `before-commit` on batch 3 | exit **86**; q03 exits **65** with the pre-existing `--out` unchanged; q02 equals the oracle; replay exits 0; second replay and failpoint-on-committed are no-ops; q03 equals the oracle |
-| Gap: batches 1, 2, 4, then q04 | exit **65**; 4 KiB random `--out` sha256 `453f1c08…` unchanged |
+| Gap: batches 1, 2, 4, then q04 | exit **65**; 4 KiB random `--out` sha256 `85ecb08d…` unchanged |
 
 **Scale at the evaluation limits** (`--cpus 4 --memory 8g --memory-swap 8g`, 200k-key fixture, `bench.py --verify`). `os.cpu_count()` and `/proc/meminfo` inside the container report the VM's 12 CPUs and 15.6 GiB. The 4-CPU and 8 GiB limits are enforced by cgroups. The engine is single-threaded.
 
 | Measure | Linux container | Target |
 |---|---:|---:|
-| Ingest total (12 containers) | **4.1 s** (max 0.43 s per batch) | < 180 s |
-| Snapshot full / hot_day / early_cutoff / empty | **3.08 / 1.44 / 1.56 / 1.02 s** | < 30 s |
-| Peak RSS | 51 MiB ingest, **439 MiB** snapshot | < 4 GiB |
+| Ingest total (12 containers) | **4.9 s** | < 180 s |
+| Snapshot full / hot_day / early_cutoff / empty | **3.23 / 1.50 / 1.62 / 1.06 s** | < 30 s |
+| Peak RSS | 51 MiB ingest, **438 MiB** snapshot | < 4 GiB |
 | State | 24.4 MiB | < 5 GiB |
 | Equal to in-memory oracle | yes, all 4 queries | — |
 
-**Hard kill with SIGKILL on Linux:**
-- **Timed kills** (`crash_test.py --trials 30 --seed 7`, in the container check): 30 trials, no violations. On Linux almost every timed kill lands during parsing (28 before staging, 2 after finishing). A second timed run concentrated late in the ingest (`--window 0.55 1.05`) still hit parsing in 28 of 30 trials, because staging and commit take only milliseconds on this filesystem.
-- **So the kill is triggered by state instead** (`--kill-when-staged`, [evidence/crash-linux-staged.txt](evidence/crash-linux-staged.txt)). The test polls the state read-only and sends SIGKILL the moment the batch's staged rows are visible. Result: **30/30 killed after staging and before commit**, including 15 on batch 12 with its erasures staged. There were **no violations**: the database was intact, the batch was invisible, the previous cutoff was byte-identical, the staged erasures masked nothing, and replay reached the reference.
+**Hard kill with SIGKILL on Linux** (both runs are part of the commit-`9ee1ce5` check above):
+- **Timed kills** (`crash_test.py --trials 30 --seed 7`): 30 trials, no violations. Outcomes: 27 before staging, 1 after staging, 2 after finishing. On Linux, parsing dominates the ingest, so timed kills rarely land in the milliseconds-long staging-to-commit window.
+- **State-triggered kills** (`crash_test.py --trials 20 --seed 11 --kill-when-staged`): the test polls the state read-only and sends SIGKILL the moment the batch's staged rows are visible. **20/20 killed after staging and before commit**, including 10 on batch 12 with its erasures staged. There were **no violations**: the database was intact, the batch was invisible, the previous cutoff was byte-identical, the staged erasures masked nothing, and replay reached the reference.
+- *Earlier, pre-commit runs.* [evidence/crash-linux-staged.txt](evidence/crash-linux-staged.txt) holds 30 more state-triggered trials (30/30 after staging, no violations). They were run from the working tree **before** commit `9ee1ce5`, on an image built while `container_check.py` was being edited, so they are supporting evidence only. A timed `--window 0.55 1.05` run from that period (28/30 before staging) motivated `--kill-when-staged`. Its output was not kept.
 
 ## 8. Proposed, not measured
 

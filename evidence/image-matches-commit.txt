@@ -1,0 +1,58 @@
+# Verifies that the image tested in evidence/container-check.txt contains exactly the committed files.
+# run at 2026-09-27T07:20:47Z
+# git commit 9ee1ce5a3afdd50d80683001ebb2944c63f55f14
+$ docker image inspect recon-engine:check --format '{{.Id}}'
+sha256:997427913e3610ca16d54b9c1842946e6709d9b8cf819d8e68efe5552f5fb2ff
+$ docker run --rm recon-engine:check sh -c 'cd /app && find . -type f | sort | xargs sha256sum'   # compared with sha256 of git show HEAD:<path>
+match    data/batch_01.jsonl
+match    data/batch_02.jsonl
+match    data/batch_03.jsonl
+match    data/batch_04.jsonl
+match    data/batch_05.jsonl
+match    data/batch_06.jsonl
+match    data/batch_07.jsonl
+match    data/batch_08.jsonl
+match    data/batch_09.jsonl
+match    data/batch_10.jsonl
+match    data/batch_11.jsonl
+match    data/batch_12.jsonl
+match    docker-entrypoint.sh
+match    engine/__init__.py
+match    engine/cli.py
+match    engine/core.py
+match    engine/money.py
+match    engine/records.py
+match    engine/store.py
+match    expected/day2.json
+match    expected/empty.json
+match    expected/q01.json
+match    expected/q02.json
+match    expected/q03.json
+match    expected/q04.json
+match    expected/q05.json
+match    expected/q07.json
+match    expected/q09.json
+match    expected/q12.json
+match    queries/day2.json
+match    queries/empty.json
+match    queries/q01.json
+match    queries/q02.json
+match    queries/q03.json
+match    queries/q04.json
+match    queries/q05.json
+match    queries/q07.json
+match    queries/q09.json
+match    queries/q12.json
+match    run
+match    scripts/bench.py
+match    scripts/crash_test.py
+match    scripts/mutants.py
+match    tests/__init__.py
+match    tests/test_core.py
+match    tests/test_durability.py
+match    tests/test_money.py
+match    tests/test_public_fixtures.py
+match    tests/test_records.py
+match    tools/check_output.py
+
+50 files in /app; 0 differ from the commit
