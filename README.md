@@ -3,8 +3,8 @@
 A local, recoverable settlement engine: ingests JSONL batches into durable SQLite state and answers
 knowledge-time/effective-time settlement queries with exact integer money. Python 3 standard library only.
 
-> Status: implementation, tests, scale measurements and docs are complete on the dev host. The Linux container
-> release gate has **not been run yet** (see [LIMITATIONS.md](LIMITATIONS.md)).
+> Status: complete. Every check passes on the dev host and in the Linux container under the evaluation constraints
+> (read-only root, arbitrary UID, no network, 4 CPUs, 8 GiB). See [EVIDENCE.md](EVIDENCE.md) §7 and [LIMITATIONS.md](LIMITATIONS.md).
 
 **Documents:** [DESIGN.md](DESIGN.md) · [OPERATIONS.md](OPERATIONS.md) · [EVIDENCE.md](EVIDENCE.md) (raw outputs in
 [evidence/](evidence/)) · [LIMITATIONS.md](LIMITATIONS.md) · [AI_LOG.md](AI_LOG.md)

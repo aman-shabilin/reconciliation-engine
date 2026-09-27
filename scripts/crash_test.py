@@ -68,6 +68,12 @@ def main():
     ap.add_argument("--data", type=Path, default=ROOT / "scale")
     ap.add_argument("--trials", type=int, default=30)
     ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--window", type=float, nargs=2, default=(0.0, 1.1), metavar=("LO", "HI"),
+                    help="kill delay range as fractions of a clean ingest; e.g. 0.6 1.0 targets "
+                         "the staging/commit end of the run, which parsing otherwise dominates")
+    ap.add_argument("--kill-when-staged", action="store_true",
+                    help="instead of a timed kill, poll the state read-only and kill as soon as "
+                         "the batch's staged rows are visible")
     args = ap.parse_args()
     batch = {b: (args.data / f"batch_{b:02d}.jsonl").resolve() for b in range(1, 13)}
     if not batch[1].exists():
@@ -106,10 +112,29 @@ def main():
             shutil.copytree(template, state)
             if target == 12:
                 assert engine("ingest", "--input", batch[11], "--state", state).returncode == 0
-            delay = rng.uniform(0, duration[target] * 1.1)
+            delay = rng.uniform(duration[target] * args.window[0], duration[target] * args.window[1])
             p = subprocess.Popen(CMD + ["ingest", "--input", str(batch[target]), "--state", str(state)],
                                  env=ENV, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            time.sleep(delay)
+            if args.kill_when_staged:
+                # Kill the moment staging (transaction A) is durable and visible to a
+                # reader: lands between staging and the publishing commit, a window
+                # far too short to hit by timing.
+                delay = 0.0
+                uri = f"{(state / 'engine.db').as_uri()}?mode=ro"
+                while p.poll() is None:
+                    probe = sqlite3.connect(uri, uri=True)
+                    try:
+                        seen = probe.execute("SELECT EXISTS (SELECT 1 FROM ledger_rev WHERE batch = ?)"
+                                             " OR EXISTS (SELECT 1 FROM erasures WHERE batch = ?)",
+                                             (target, target)).fetchone()[0]
+                    except sqlite3.OperationalError:
+                        seen = 0
+                    finally:
+                        probe.close()
+                    if seen:
+                        break
+            else:
+                time.sleep(delay)
             finished = p.poll() is not None
             if not finished:
                 hard_kill(p)

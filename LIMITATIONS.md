@@ -2,10 +2,10 @@
 
 What is incomplete, unverified or deliberately out of scope, as of the latest commit.
 
-## Not yet verified
-- **The Linux container release gate has not been run** (EVIDENCE.md §7). The Dockerfile and `scripts/container_check.py` exist, but the Docker engine on the dev host was not running. So none of the following has been observed yet: the `run` shell adapter, an arbitrary UID, a read-only root filesystem, SQLite WAL on a `--read-only` container, POSIX directory fsync, the Python 3.12 base image, or the `--cpus 4 --memory 8g` performance numbers.
-- **All measurements come from a Windows dev host** (12 CPUs, 32 GiB, Python 3.14), not the 4-core, 8 GiB Linux evaluation host.
-- **The hard-kill test used Windows `TerminateProcess`,** not Linux `SIGKILL`. The script supports both, but it has only been run on Windows.
+## Verification boundaries
+- **The Linux container gate passed** (EVIDENCE.md §7) on Docker Desktop's WSL 2 Linux VM on the dev host. It covered an arbitrary UID, a read-only root, no network, and `--cpus 4 --memory 8g`. That is a cgroup-limited VM, not the reviewers' 4-core, 8 GiB bare host. CPU speed and disk fsync latency will differ. The measured margins are about 40× on ingest and 10× on snapshot time.
+- **Durability was tested on Docker named volumes (ext4 in the VM) and on NTFS.** It was not tested on network filesystems, which SQLite WAL does not support. `/state` must be a local filesystem.
+- **Power-loss durability** (as opposed to a process kill) relies on SQLite `synchronous=FULL` and the storage honouring fsync. It was not tested by cutting power.
 
 ## Design limits
 - **Full recomputation per snapshot.** Cost is linear in revisions ≤ B, whatever the date range. Measured: 12.2 s and 1.3 GiB at 1M keys. Past roughly 2.5–3M keys (extrapolated) the 30 s / 4 GiB targets would be missed. Moving revision selection into SQL is the planned remedy, not built.

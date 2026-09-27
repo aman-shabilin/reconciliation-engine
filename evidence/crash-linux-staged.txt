@@ -1,0 +1,36 @@
+$ docker run --rm --read-only --user 23456:23456 --network none --tmpfs /tmp:size=2g --mount type=bind,src=<repo>/scale,dst=/scale,readonly recon-engine:check python3 /app/scripts/crash_test.py --data /scale --trials 30 --seed 11 --kill-when-staged
+# run at 2026-09-27T07:02:00Z, Linux container (SIGKILL)
+clean ingest duration: batch 11 0.42s, batch 12 0.23s
+trial  0 batch 11 delay 0.00s killed after staging   ok
+trial  1 batch 12 delay 0.00s killed after staging   ok
+trial  2 batch 11 delay 0.00s killed after staging   ok
+trial  3 batch 12 delay 0.00s killed after staging   ok
+trial  4 batch 11 delay 0.00s killed after staging   ok
+trial  5 batch 12 delay 0.00s killed after staging   ok
+trial  6 batch 11 delay 0.00s killed after staging   ok
+trial  7 batch 12 delay 0.00s killed after staging   ok
+trial  8 batch 11 delay 0.00s killed after staging   ok
+trial  9 batch 12 delay 0.00s killed after staging   ok
+trial 10 batch 11 delay 0.00s killed after staging   ok
+trial 11 batch 12 delay 0.00s killed after staging   ok
+trial 12 batch 11 delay 0.00s killed after staging   ok
+trial 13 batch 12 delay 0.00s killed after staging   ok
+trial 14 batch 11 delay 0.00s killed after staging   ok
+trial 15 batch 12 delay 0.00s killed after staging   ok
+trial 16 batch 11 delay 0.00s killed after staging   ok
+trial 17 batch 12 delay 0.00s killed after staging   ok
+trial 18 batch 11 delay 0.00s killed after staging   ok
+trial 19 batch 12 delay 0.00s killed after staging   ok
+trial 20 batch 11 delay 0.00s killed after staging   ok
+trial 21 batch 12 delay 0.00s killed after staging   ok
+trial 22 batch 11 delay 0.00s killed after staging   ok
+trial 23 batch 12 delay 0.00s killed after staging   ok
+trial 24 batch 11 delay 0.00s killed after staging   ok
+trial 25 batch 12 delay 0.00s killed after staging   ok
+trial 26 batch 11 delay 0.00s killed after staging   ok
+trial 27 batch 12 delay 0.00s killed after staging   ok
+trial 28 batch 11 delay 0.00s killed after staging   ok
+trial 29 batch 12 delay 0.00s killed after staging   ok
+
+30 trials, no violations. outcomes: {'killed after staging': 30}
+exit 0

@@ -82,6 +82,11 @@ The reviewer challenged five points. All were accepted, one with an adaptation:
   - Word limits: DESIGN 1,792 words with a 540-word scale note; OPERATIONS 1,113.
   - EVIDENCE labels the container gate NOT MEASURED instead of inferring the result.
 
+### 9. Linux container release gate (Claude Code): a coverage gap noticed despite a green run
+- **Produced:** `scripts/container_check.py`, run against the digest-pinned image. Result: all checks passed (EVIDENCE.md §7), including 80/80 self-tests with the `run` adapter test executing, and 200k-key performance under `--cpus 4 --memory 8g`.
+- **Not accepted at face value:** the timed SIGKILL test passed, but its outcome counts showed no kill had landed between staging and commit on Linux. A late-window retry still hit parsing 28 of 30 times. Claude added `--kill-when-staged`, which polls the state read-only and kills the instant staged rows appear. That run produced 30/30 kills in the intended window, with no violations.
+- **Checked:** the docs changed from "NOT MEASURED" to the observed values. LIMITATIONS.md now states the remaining boundaries: a VM rather than a bare host, local filesystems only, and no power-loss testing.
+
 ## Suggestions rejected or corrected
 
 2. Claude's own first design, a generic `canon_json` staging table, rejected after review because it could retain PII (interaction 2).

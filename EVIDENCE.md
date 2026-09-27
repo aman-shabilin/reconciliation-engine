@@ -2,7 +2,7 @@
 
 Every result below was **measured** by running the command shown. The raw output is in [evidence/](evidence/), and each file starts with its command and a UTC timestamp. Anything not yet measured is labelled **NOT MEASURED** or **PROPOSED**.
 
-**Dev host:** Windows 11 Pro 10.0.26200, AMD Ryzen (family 25, model 33), 12 logical CPUs, 31.9 GiB RAM, Python 3.14.6, SQLite 3.50.4, Git Bash. **This is not the evaluation host** (Linux, 4 cores, 8 GiB). Linux results come from the container check in §7.
+**Dev host:** Windows 11 Pro 10.0.26200, AMD Ryzen (family 25, model 33), 12 logical CPUs, 31.9 GiB RAM, Python 3.14.6, SQLite 3.50.4, Git Bash. **This is not the evaluation host** (Linux, 4 cores, 8 GiB). §1–6 were measured on it. **§7 repeats the key checks in the Linux container** under the evaluation constraints, including the 4-CPU and 8 GiB limits.
 
 ## 1. Correctness: public fixtures through `./run`
 
@@ -84,7 +84,7 @@ Setup: 200k-key scale fixture, batches 1..10 committed. Each trial ingests batch
 3. The new cutoff is either the full reference or exit 65.
 4. Replay exits 0, and the new-cutoff snapshot is byte-identical to the reference.
 
-The window inside the final one-row commit is too narrow to hit by timing. It is covered deterministically by the `before-commit` failpoint in §3.
+The window inside the final one-row commit is too narrow to hit by timing. It is covered deterministically by the `before-commit` failpoint in §3. The staging-to-commit window is targeted directly on Linux in §7 (30/30 kills landed there).
 
 ## 5. Scale and performance
 
@@ -130,9 +130,36 @@ Peak RSS is measured per engine process (`PeakWorkingSetSize` on Windows, `wait4
 $ python scripts/container_check.py
 ```
 
-This runs the self-test suite, including the `run` adapter, and checks that `/app` is immutable. It then runs public parity, both failpoints, gap rejection with an output sha256 comparison, and a PII scan of the state volume. It finishes with the scale benchmark under `--cpus 4 --memory 8g`. Each command runs in its own container with `--read-only --user 23456:23456 --network none --tmpfs /tmp`.
+Raw output: [evidence/container-check.txt](evidence/container-check.txt) (2026-09-27, `ALL CONTAINER CHECKS PASSED`, exit 0).
 
-**Status: NOT MEASURED.** The Docker engine on the dev host has not started yet: Docker Desktop is installed and WSL 2 was just enabled, but the Linux engine is not responding. This section will be replaced with the observed output. Until then, Linux behaviour is unverified: the shell adapter, arbitrary UID, read-only root, WAL under `--read-only`, directory fsync and Python 3.12. [LIMITATIONS.md](LIMITATIONS.md) says so too.
+**Environment:**
+- Docker 29.8.0 (Docker Desktop, WSL 2 kernel 6.18, x86_64) on the dev host.
+- Image `python:3.12-slim@sha256:f77ac9e4…`, which provides **Python 3.12.14** and **SQLite 3.46.1**.
+- Every engine command ran in its **own container** with `--read-only --user 23456:23456 --network none --tmpfs /tmp`. That UID is not the image's default user.
+- State lived in a named volume that persisted across containers. Inputs were bind-mounted read-only.
+
+| Check | Observed |
+|---|---|
+| Self-test suite in the image (`selftest`) | `Ran 80 tests in 10.246s … OK`, **0 skipped**: the POSIX `run` adapter test executed |
+| `/app` immutable for the runtime user | `touch /app/x` exits 1; `/app/run` is executable and the sources are readable |
+| Public fixtures, 12 ingests and 10 snapshots | **all 10 match `expected/`** |
+| PII scan of the state volume | no match in `engine.db`, `-wal` or `-shm`; files owned by UID 23456 |
+| `--failpoint after-stage` / `before-commit` on batch 3 | exit **86**; q03 exits **65** with the pre-existing `--out` unchanged; q02 equals the oracle; replay exits 0; second replay and failpoint-on-committed are no-ops; q03 equals the oracle |
+| Gap: batches 1, 2, 4, then q04 | exit **65**; 4 KiB random `--out` sha256 `453f1c08…` unchanged |
+
+**Scale at the evaluation limits** (`--cpus 4 --memory 8g --memory-swap 8g`, 200k-key fixture, `bench.py --verify`). `os.cpu_count()` and `/proc/meminfo` inside the container report the VM's 12 CPUs and 15.6 GiB. The 4-CPU and 8 GiB limits are enforced by cgroups. The engine is single-threaded.
+
+| Measure | Linux container | Target |
+|---|---:|---:|
+| Ingest total (12 containers) | **4.1 s** (max 0.43 s per batch) | < 180 s |
+| Snapshot full / hot_day / early_cutoff / empty | **3.08 / 1.44 / 1.56 / 1.02 s** | < 30 s |
+| Peak RSS | 51 MiB ingest, **439 MiB** snapshot | < 4 GiB |
+| State | 24.4 MiB | < 5 GiB |
+| Equal to in-memory oracle | yes, all 4 queries | — |
+
+**Hard kill with SIGKILL on Linux:**
+- **Timed kills** (`crash_test.py --trials 30 --seed 7`, in the container check): 30 trials, no violations. On Linux almost every timed kill lands during parsing (28 before staging, 2 after finishing). A second timed run concentrated late in the ingest (`--window 0.55 1.05`) still hit parsing in 28 of 30 trials, because staging and commit take only milliseconds on this filesystem.
+- **So the kill is triggered by state instead** (`--kill-when-staged`, [evidence/crash-linux-staged.txt](evidence/crash-linux-staged.txt)). The test polls the state read-only and sends SIGKILL the moment the batch's staged rows are visible. Result: **30/30 killed after staging and before commit**, including 15 on batch 12 with its erasures staged. There were **no violations**: the database was intact, the batch was invisible, the previous cutoff was byte-identical, the staged erasures masked nothing, and replay reached the reference.
 
 ## 8. Proposed, not measured
 

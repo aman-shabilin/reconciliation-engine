@@ -69,7 +69,7 @@ Measured on the dev host (Windows 11, AMD Ryzen 12 cores, 32 GiB, Python 3.14, S
 | 200k keys (target size), 228k rows | 3.9 s | 2.3 s | 293 MiB | 24 MiB |
 | 1M keys (5×), 1.12M rows | 20.8 s | 12.2 s | 1.3 GiB | 121 MiB |
 
-Targets: < 180 s ingest, < 30 s per snapshot, < 4 GiB, < 5 GiB. Snapshot cost is linear in revisions ≤ B, whatever the date range. The projected ceiling is about 2.5–3M keys (DESIGN.md, *Limits*). Linux numbers under `--cpus 4 --memory 8g` come from `scripts/container_check.py` (see EVIDENCE.md for status).
+Targets: < 180 s ingest, < 30 s per snapshot, < 4 GiB, < 5 GiB. Snapshot cost is linear in revisions ≤ B, whatever the date range. The projected ceiling is about 2.5–3M keys (DESIGN.md, *Limits*). **Linux container, `--cpus 4 --memory 8g`, 200k keys:** ingest 4.1 s, slowest snapshot 3.1 s, peak 439 MiB, state 24 MiB (EVIDENCE.md §7).
 
 ## Incident runbook: settlement snapshot fails after a host restart
 
