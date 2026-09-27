@@ -197,6 +197,14 @@ def main():
                 "python3", "/app/scripts/bench.py", "--data", "/scale", "--state", "/state/bench",
                 "--verify"], quiet=True)
         print(r.stdout)
+
+        section("hard-kill crash test with SIGKILL (Linux)")
+        r = sh(["run", "--rm", "--read-only", "--user", UID, "--network", "none",
+                "--tmpfs", "/tmp:size=2g",
+                "--mount", f"type=bind,src={scale},dst=/scale,readonly", IMAGE,
+                "python3", "/app/scripts/crash_test.py", "--data", "/scale",
+                "--trials", "30", "--seed", "7"], quiet=True)
+        print("\n".join(r.stdout.splitlines()[-3:]))
     else:
         print("\n(scale/ not generated; skipping scale benchmark: run scripts/gen_scale.py)")
 

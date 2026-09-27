@@ -3,7 +3,11 @@
 A local, recoverable settlement engine: ingests JSONL batches into durable SQLite state and answers
 knowledge-time/effective-time settlement queries with exact integer money. Python 3 standard library only.
 
-> Work in progress: Docker image, scale measurements and design/operations docs are not done yet.
+> Status: implementation, tests, scale measurements and docs are complete on the dev host. The Linux container
+> release gate has **not been run yet** (see [LIMITATIONS.md](LIMITATIONS.md)).
+
+**Documents:** [DESIGN.md](DESIGN.md) · [OPERATIONS.md](OPERATIONS.md) · [EVIDENCE.md](EVIDENCE.md) (raw outputs in
+[evidence/](evidence/)) · [LIMITATIONS.md](LIMITATIONS.md) · [AI_LOG.md](AI_LOG.md)
 
 ## Run locally
 
@@ -39,7 +43,10 @@ image runs offline. `/app` is root-owned and read-only to the runtime user; only
 
 ```sh
 python3 -m unittest discover -s tests -t .   # unit, public-fixture parity, durability, privacy
-python3 scripts/mutants.py                   # injects 25 spec violations; all must be caught
+python3 scripts/mutants.py                   # injects 28 spec violations; all must be caught
+python3 scripts/gen_scale.py                 # seeded 200k-key scale fixture into scale/ (gitignored)
+python3 scripts/bench.py --verify            # ingest/snapshot wall time, peak RSS, state size
+python3 scripts/crash_test.py --trials 40    # hard-kill ingest at random points, check recovery
 ```
 
 ## Layout

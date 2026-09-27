@@ -1,0 +1,66 @@
+# run at 2026-09-27T04:18:41Z on Windows host (Git Bash), PYTHON=python
+$ for i in 01..12; do ./run ingest --input $PWD/data/batch_$i.jsonl --state $STATE; done
+engine: ingest batch 1: committed 139 rows (fx 16, merchants 100, profiles_discarded 23)
+  exit 0
+engine: ingest batch 2: committed 16 rows (ledger 16)
+  exit 0
+engine: ingest batch 3: committed 11 rows (ledger 10, unsupported 1)
+  exit 0
+engine: ingest batch 4: committed 10 rows (ledger 9, merchants 1)
+  exit 0
+engine: ingest batch 5: committed 18 rows (fx 2, ledger 14, merchants 2)
+  exit 0
+engine: ingest batch 6: committed 19 rows (ledger 19)
+  exit 0
+engine: ingest batch 7: committed 7 rows (ledger 6, merchants 1)
+  exit 0
+engine: ingest batch 8: committed 4 rows (ledger 4)
+  exit 0
+engine: ingest batch 9: committed 1 rows (fx 1)
+  exit 0
+engine: ingest batch 10: committed 2 rows (erasures 2)
+  exit 0
+engine: ingest batch 11: committed 1 rows (profiles_discarded 1)
+  exit 0
+engine: ingest batch 12: committed 2 rows (ledger 1, unsupported 1)
+  exit 0
+
+$ for q in queries/*.json; do ./run snapshot --query $PWD/$q --state $STATE --out $OUT/$(basename $q); done   # then JSON-compare with expected/
+engine: snapshot day2: 1 settlements, 13 trace, 4 exceptions
+   day2.json MATCHES expected
+engine: snapshot empty: 0 settlements, 0 trace, 4 exceptions
+   empty.json MATCHES expected
+engine: snapshot q01: 0 settlements, 0 trace, 0 exceptions
+   q01.json MATCHES expected
+engine: snapshot q02: 5 settlements, 16 trace, 0 exceptions
+   q02.json MATCHES expected
+engine: snapshot q03: 6 settlements, 21 trace, 4 exceptions
+   q03.json MATCHES expected
+engine: snapshot q04: 5 settlements, 14 trace, 18 exceptions
+   q04.json MATCHES expected
+engine: snapshot q05: 7 settlements, 18 trace, 28 exceptions
+   q05.json MATCHES expected
+engine: snapshot q07: 14 settlements, 59 trace, 5 exceptions
+   q07.json MATCHES expected
+engine: snapshot q09: 14 settlements, 59 trace, 5 exceptions
+   q09.json MATCHES expected
+engine: snapshot q12: 14 settlements, 60 trace, 6 exceptions
+   q12.json MATCHES expected
+
+$ python tools/check_output.py $OUT/q12.json
+Output structure and ordering OK; values not checked.
+
+$ ls -la $STATE && grep -rlaE "SYNTHETIC|example\.invalid" $STATE || echo "no names/emails in state"
+  total 116
+  drwxr-xr-x 1 aman_ 197609     0 Sep 27 12:18 .
+  drwxr-xr-x 1 aman_ 197609     0 Sep 27 12:18 ..
+  -rw-r--r-- 1 aman_ 197609 81920 Sep 27 12:18 engine.db
+  -rw-r--r-- 1 aman_ 197609 32768 Sep 27 12:18 engine.db-shm
+  -rw-r--r-- 1 aman_ 197609     0 Sep 27 12:18 engine.db-wal
+  no names/emails in state (db, -wal, -shm)
+
+$ ./run snapshot (cutoff 4) after ingesting only batches 1,2,4 into a fresh state, with a pre-existing --out
+643557674635dab8e7ca6f73e23bc7766ec4311268dd63a91b7ccd9b8ad24978 */tmp/tmp.2YR5VuDUi9/g/q04.json
+engine: snapshot q04: cutoff 4 requires batches 1..4; 3 committed; existing output left untouched
+  exit 65
+643557674635dab8e7ca6f73e23bc7766ec4311268dd63a91b7ccd9b8ad24978 */tmp/tmp.2YR5VuDUi9/g/q04.json

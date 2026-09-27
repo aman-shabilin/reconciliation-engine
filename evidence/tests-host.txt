@@ -1,0 +1,87 @@
+$ python -m unittest discover -s tests -t . -v
+# run at 2026-09-27T04:15:21Z on Windows host, Python 3.14.6
+test_blocked_fx_is_absent_for_joins (tests.test_core.JoinTest.test_blocked_fx_is_absent_for_joins) ... ok
+test_blocked_merchant_is_absent_for_joins (tests.test_core.JoinTest.test_blocked_merchant_is_absent_for_joins) ... ok
+test_date_range_start_inclusive_end_exclusive (tests.test_core.JoinTest.test_date_range_start_inclusive_end_exclusive) ... ok
+test_empty_range (tests.test_core.JoinTest.test_empty_range) ... ok
+test_fx_uses_utc_date_of_entry (tests.test_core.JoinTest.test_fx_uses_utc_date_of_entry) ... ok
+test_join_error_carries_selected_version (tests.test_core.JoinTest.test_join_error_carries_selected_version) ... ok
+test_join_errors_only_in_date_range (tests.test_core.JoinTest.test_join_errors_only_in_date_range) ... ok
+test_only_first_join_error_ambiguous_before_fx (tests.test_core.JoinTest.test_only_first_join_error_ambiguous_before_fx) ... ok
+test_only_first_join_error_missing_merchant_before_fx (tests.test_core.JoinTest.test_only_first_join_error_missing_merchant_before_fx) ... ok
+test_usd_has_no_implicit_rate (tests.test_core.JoinTest.test_usd_has_no_implicit_rate) ... ok
+test_void_produces_no_join_error (tests.test_core.JoinTest.test_void_produces_no_join_error) ... ok
+test_erasure_masks_token_only (tests.test_core.KnowledgeTimeTest.test_erasure_masks_token_only) ... ok
+test_later_batches_invisible_at_earlier_cutoff (tests.test_core.KnowledgeTimeTest.test_later_batches_invisible_at_earlier_cutoff) ... ok
+test_unsupported_reported_once_regardless_of_date (tests.test_core.KnowledgeTimeTest.test_unsupported_reported_once_regardless_of_date) ... ok
+test_exact_top_level_fields_and_int_types (tests.test_core.OutputShapeTest.test_exact_top_level_fields_and_int_types) ... ok
+test_exception_sort_key_puts_null_before_integers (tests.test_core.OutputShapeTest.test_exception_sort_key_puts_null_before_integers) ... ok
+test_groups_split_by_region_and_sorted (tests.test_core.OutputShapeTest.test_groups_split_by_region_and_sorted) ... ok
+test_sorting_is_by_string_and_null_version_first (tests.test_core.OutputShapeTest.test_sorting_is_by_string_and_null_version_first) ... ok
+test_conflict_with_void_variant_is_still_conflict (tests.test_core.SelectionTest.test_conflict_with_void_variant_is_still_conflict) ... ok
+test_highest_version_wins_not_last_arriving (tests.test_core.SelectionTest.test_highest_version_wins_not_last_arriving) ... ok
+test_identical_copies_collapse (tests.test_core.SelectionTest.test_identical_copies_collapse) ... ok
+test_ledger_conflict_outside_date_range_reported (tests.test_core.SelectionTest.test_ledger_conflict_outside_date_range_reported) ... ok
+test_lower_version_conflict_not_reported (tests.test_core.SelectionTest.test_lower_version_conflict_not_reported) ... ok
+test_merchant_revision_replaces_interval_end (tests.test_core.SelectionTest.test_merchant_revision_replaces_interval_end) ... ok
+test_revision_may_change_merchant_and_currency (tests.test_core.SelectionTest.test_revision_may_change_merchant_and_currency) ... ok
+test_three_variants_emit_one_conflict (tests.test_core.SelectionTest.test_three_variants_emit_one_conflict) ... ok
+test_unreferenced_merchant_and_fx_conflicts_reported (tests.test_core.SelectionTest.test_unreferenced_merchant_and_fx_conflicts_reported) ... ok
+test_1_round_per_entry_then_sum_zero_net_group_kept (tests.test_core.WorkedExamplesTest.test_1_round_per_entry_then_sum_zero_net_group_kept) ... ok
+test_2_revisions_replace_and_void_removes (tests.test_core.WorkedExamplesTest.test_2_revisions_replace_and_void_removes) ... ok
+test_3_conflict_blocks_until_higher_version (tests.test_core.WorkedExamplesTest.test_3_conflict_blocks_until_higher_version) ... ok
+test_4_ambiguous_even_when_attributes_match (tests.test_core.WorkedExamplesTest.test_4_ambiguous_even_when_attributes_match) ... ok
+test_4_interval_end_is_exclusive (tests.test_core.WorkedExamplesTest.test_4_interval_end_is_exclusive) ... ok
+test_4_interval_start_is_inclusive (tests.test_core.WorkedExamplesTest.test_4_interval_start_is_inclusive) ... ok
+test_5_changed_effective_date_moves_between_days (tests.test_core.WorkedExamplesTest.test_5_changed_effective_date_moves_between_days) ... ok
+test_6_future_fx_does_not_change_old_cutoff_but_erasure_masks_it (tests.test_core.WorkedExamplesTest.test_6_future_fx_does_not_change_old_cutoff_but_erasure_masks_it) ... ok
+test_7_large_integer_exact (tests.test_core.WorkedExamplesTest.test_7_large_integer_exact) ... ok
+test_checkpoint_holds_no_payload_derived_fingerprint (tests.test_durability.BatchIdentityTest.test_checkpoint_holds_no_payload_derived_fingerprint) ... ok
+test_different_file_for_committed_batch_is_rejected_without_change (tests.test_durability.BatchIdentityTest.test_different_file_for_committed_batch_is_rejected_without_change) ... ok
+test_orphan_rows_from_a_different_staged_file_are_not_published (tests.test_durability.BatchIdentityTest.test_orphan_rows_from_a_different_staged_file_are_not_published) ... ok
+test_reordered_retry_is_the_same_batch (tests.test_durability.BatchIdentityTest.test_reordered_retry_is_the_same_batch) ... ok
+test_gap_preserves_existing_output_byte_for_byte (tests.test_durability.CliTest.test_gap_preserves_existing_output_byte_for_byte) ... ok
+test_public_fixtures_through_cli (tests.test_durability.CliTest.test_public_fixtures_through_cli) ... ok
+test_real_failpoints_exit_86_then_replay_commits_once (tests.test_durability.CliTest.test_real_failpoints_exit_86_then_replay_commits_once) ... ok
+test_run_adapter (tests.test_durability.CliTest.test_run_adapter) ... skipped 'needs POSIX sh'
+test_stderr_has_no_pii_or_tokens (tests.test_durability.CliTest.test_stderr_has_no_pii_or_tokens) ... ok
+test_after_stage (tests.test_durability.FailpointRecoveryTest.test_after_stage) ... ok
+test_after_stage_really_stages_durably (tests.test_durability.FailpointRecoveryTest.test_after_stage_really_stages_durably) ... ok
+test_before_commit (tests.test_durability.FailpointRecoveryTest.test_before_commit) ... ok
+test_before_commit_leaves_nothing_new (tests.test_durability.FailpointRecoveryTest.test_before_commit_leaves_nothing_new) ... ok
+test_orphan_staged_batch_never_leaks (tests.test_durability.FailpointRecoveryTest.test_orphan_staged_batch_never_leaks) ... ok
+test_empty_state_is_a_gap_and_is_not_created (tests.test_durability.GapAndOrderTest.test_empty_state_is_a_gap_and_is_not_created) ... ok
+test_gap_rejected (tests.test_durability.GapAndOrderTest.test_gap_rejected) ... ok
+test_random_orders_with_retries_match_oracle_at_every_step (tests.test_durability.GapAndOrderTest.test_random_orders_with_retries_match_oracle_at_every_step) ... ok
+test_reader_keeps_its_snapshot_while_erasure_commits (tests.test_durability.IsolationTest.test_reader_keeps_its_snapshot_while_erasure_commits) ... ok
+test_no_pii_in_state_after_all_batches_including_replayed_profile (tests.test_durability.PrivacyTest.test_no_pii_in_state_after_all_batches_including_replayed_profile) ... ok
+test_unknown_schema_payload_never_persisted (tests.test_durability.PrivacyTest.test_unknown_schema_payload_never_persisted) ... ok
+test_exact_division (tests.test_money.RoundHalfEvenTest.test_exact_division) ... ok
+test_huge_values_survive_json_round_trip (tests.test_money.RoundHalfEvenTest.test_huge_values_survive_json_round_trip) ... ok
+test_matches_fraction_reference (tests.test_money.RoundHalfEvenTest.test_matches_fraction_reference) ... ok
+test_non_ties_round_to_nearest (tests.test_money.RoundHalfEvenTest.test_non_ties_round_to_nearest) ... ok
+test_rejects_non_positive_denominator (tests.test_money.RoundHalfEvenTest.test_rejects_non_positive_denominator) ... ok
+test_ties_go_to_even_symmetrically (tests.test_money.RoundHalfEvenTest.test_ties_go_to_even_symmetrically) ... ok
+test_worked_example_1_rounds_each_entry (tests.test_money.RoundHalfEvenTest.test_worked_example_1_rounds_each_entry) ... ok
+test_worked_example_7_beyond_float_precision (tests.test_money.RoundHalfEvenTest.test_worked_example_7_beyond_float_precision) ... ok
+test_cases_present (tests.test_public_fixtures.PublicFixtureTest.test_cases_present) ... ok
+test_every_public_query_matches_exactly (tests.test_public_fixtures.PublicFixtureTest.test_every_public_query_matches_exactly) ... ok
+test_exact_retry_does_not_change_results (tests.test_public_fixtures.PublicFixtureTest.test_exact_retry_does_not_change_results) ... ok
+test_row_order_does_not_matter (tests.test_public_fixtures.PublicFixtureTest.test_row_order_does_not_matter) ... ok
+test_accepts_signed_decimal (tests.test_records.IntTextTest.test_accepts_signed_decimal) ... ok
+test_rejects_non_canonical_forms (tests.test_records.IntTextTest.test_rejects_non_canonical_forms) ... ok
+test_extra_payload_and_envelope_fields_ignored (tests.test_records.LedgerNormalisationTest.test_extra_payload_and_envelope_fields_ignored) ... ok
+test_v1_and_v2_equal_payloads_are_business_equal (tests.test_records.LedgerNormalisationTest.test_v1_and_v2_equal_payloads_are_business_equal) ... ok
+test_v2_amount_parsed_as_exact_int (tests.test_records.LedgerNormalisationTest.test_v2_amount_parsed_as_exact_int) ... ok
+test_v2_different_amount_is_different (tests.test_records.LedgerNormalisationTest.test_v2_different_amount_is_different) ... ok
+test_boolean_is_not_version_1 (tests.test_records.SchemaRoutingTest.test_boolean_is_not_version_1) ... ok
+test_erasure (tests.test_records.SchemaRoutingTest.test_erasure) ... ok
+test_profile_is_discarded (tests.test_records.SchemaRoutingTest.test_profile_is_discarded) ... ok
+test_unknown_stream_is_unsupported (tests.test_records.SchemaRoutingTest.test_unknown_stream_is_unsupported) ... ok
+test_unknown_version_is_unsupported (tests.test_records.SchemaRoutingTest.test_unknown_version_is_unsupported) ... ok
+test_unsupported_keeps_no_payload (tests.test_records.SchemaRoutingTest.test_unsupported_keeps_no_payload) ... ok
+
+----------------------------------------------------------------------
+Ran 80 tests in 29.292s
+
+OK (skipped=1)

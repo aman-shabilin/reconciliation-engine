@@ -17,7 +17,7 @@ WORKDIR /app
 # (docker run ... recon-engine selftest). Nothing under /app is written at runtime.
 COPY engine/ /app/engine/
 COPY tests/ /app/tests/
-COPY scripts/mutants.py scripts/bench.py /app/scripts/
+COPY scripts/mutants.py scripts/bench.py scripts/crash_test.py /app/scripts/
 COPY data/ /app/data/
 COPY queries/ /app/queries/
 COPY expected/ /app/expected/

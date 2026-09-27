@@ -1,0 +1,62 @@
+$ python scripts/mutants.py
+# run at 2026-09-27T04:15:51Z on Windows host
+baseline passes
+
+killed   round half up instead of half even
+           by test_1_round_per_entry_then_sum_zero_net_group_kept (tests.test_core.WorkedExamplesTest.test_1_round_per_entry_then_sum_zero_net_group_kept)
+killed   round half away from zero via >=
+           by test_1_round_per_entry_then_sum_zero_net_group_kept (tests.test_core.WorkedExamplesTest.test_1_round_per_entry_then_sum_zero_net_group_kept)
+killed   float division
+           by test_7_large_integer_exact (tests.test_core.WorkedExamplesTest.test_7_large_integer_exact)
+killed   v2 amount parsed through float
+           by test_v2_amount_parsed_as_exact_int (tests.test_records.LedgerNormalisationTest.test_v2_amount_parsed_as_exact_int)
+killed   bool accepted as schema version
+           by test_boolean_is_not_version_1 (tests.test_records.SchemaRoutingTest.test_boolean_is_not_version_1)
+killed   last-arriving version wins ties
+           by test_blocked_fx_is_absent_for_joins (tests.test_core.JoinTest.test_blocked_fx_is_absent_for_joins)
+killed   conflict picks an arbitrary winner
+           by test_blocked_fx_is_absent_for_joins (tests.test_core.JoinTest.test_blocked_fx_is_absent_for_joins)
+killed   lowest version wins
+           by test_join_error_carries_selected_version (tests.test_core.JoinTest.test_join_error_carries_selected_version)
+killed   interval end inclusive
+           by test_4_interval_end_is_exclusive (tests.test_core.WorkedExamplesTest.test_4_interval_end_is_exclusive)
+killed   interval start exclusive
+           by test_4_interval_start_is_inclusive (tests.test_core.WorkedExamplesTest.test_4_interval_start_is_inclusive)
+killed   ambiguity ignored (first match wins)
+           by test_only_first_join_error_ambiguous_before_fx (tests.test_core.JoinTest.test_only_first_join_error_ambiguous_before_fx)
+killed   date range end inclusive
+           by test_date_range_start_inclusive_end_exclusive (tests.test_core.JoinTest.test_date_range_start_inclusive_end_exclusive)
+killed   VOID contributes
+           by test_void_produces_no_join_error (tests.test_core.JoinTest.test_void_produces_no_join_error)
+killed   erasure not applied
+           by test_erasure_masks_token_only (tests.test_core.KnowledgeTimeTest.test_erasure_masks_token_only)
+killed   erasure limited by cutoff
+           by test_erasure_masks_token_only (tests.test_core.KnowledgeTimeTest.test_erasure_masks_token_only)
+killed   null version sorts last
+           by test_exception_sort_key_puts_null_before_integers (tests.test_core.OutputShapeTest.test_exception_sort_key_puts_null_before_integers)
+killed   ledger conflicts limited to date range
+           by test_conflict_with_void_variant_is_still_conflict (tests.test_core.SelectionTest.test_conflict_with_void_variant_is_still_conflict)
+killed   fx keyed by query start not entry date
+           by test_fx_uses_utc_date_of_entry (tests.test_core.JoinTest.test_fx_uses_utc_date_of_entry)
+killed   gap check disabled
+           by test_gap_preserves_existing_output_byte_for_byte (tests.test_durability.CliTest.test_gap_preserves_existing_output_byte_for_byte)
+killed   uncommitted erasures applied
+           by test_after_stage (tests.test_durability.FailpointRecoveryTest.test_after_stage)
+killed   before-commit failpoint fires after COMMIT
+           by test_real_failpoints_exit_86_then_replay_commits_once (tests.test_durability.CliTest.test_real_failpoints_exit_86_then_replay_commits_once)
+killed   fake after-stage exit before staging
+           by test_after_stage_really_stages_durably (tests.test_durability.FailpointRecoveryTest.test_after_stage_really_stages_durably)
+killed   replay of committed batch re-commits
+           by test_different_file_for_committed_batch_is_rejected_without_change (tests.test_durability.BatchIdentityTest.test_different_file_for_committed_batch_is_rejected_without_change)
+killed   stale staged rows kept on re-stage
+           by test_orphan_rows_from_a_different_staged_file_are_not_published (tests.test_durability.BatchIdentityTest.test_orphan_rows_from_a_different_staged_file_are_not_published)
+killed   different file under committed batch accepted
+           by test_different_file_for_committed_batch_is_rejected_without_change (tests.test_durability.BatchIdentityTest.test_different_file_for_committed_batch_is_rejected_without_change)
+killed   fingerprint depends on line order
+           by test_reordered_retry_is_the_same_batch (tests.test_durability.BatchIdentityTest.test_reordered_retry_is_the_same_batch)
+killed   snapshot writes output before gap check can fail
+           by test_gap_preserves_existing_output_byte_for_byte (tests.test_durability.CliTest.test_gap_preserves_existing_output_byte_for_byte)
+killed   MISSING_FX checked before merchant
+           by test_only_first_join_error_ambiguous_before_fx (tests.test_core.JoinTest.test_only_first_join_error_ambiguous_before_fx)
+
+28/28 mutants killed

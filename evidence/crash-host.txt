@@ -1,0 +1,46 @@
+$ python scripts/crash_test.py --trials 40 --seed 7
+# run at 2026-09-27T04:13:18Z on Windows host
+clean ingest duration: batch 11 0.51s, batch 12 0.25s
+trial  0 batch 11 delay 0.18s killed before staging  ok
+trial  1 batch 12 delay 0.04s killed before staging  ok
+trial  2 batch 11 delay 0.37s killed before staging  ok
+trial  3 batch 12 delay 0.02s killed before staging  ok
+trial  4 batch 11 delay 0.30s killed before staging  ok
+trial  5 batch 12 delay 0.10s killed before staging  ok
+trial  6 batch 11 delay 0.03s killed before staging  ok
+trial  7 batch 12 delay 0.14s killed before staging  ok
+trial  8 batch 11 delay 0.02s killed before staging  ok
+trial  9 batch 12 delay 0.12s killed before staging  ok
+trial 10 batch 11 delay 0.04s killed before staging  ok
+trial 11 batch 12 delay 0.03s killed before staging  ok
+trial 12 batch 11 delay 0.24s killed before staging  ok
+trial 13 batch 12 delay 0.23s killed after commit    ok
+trial 14 batch 11 delay 0.07s killed before staging  ok
+trial 15 batch 12 delay 0.06s killed before staging  ok
+trial 16 batch 11 delay 0.35s killed before staging  ok
+trial 17 batch 12 delay 0.26s finished               ok
+trial 18 batch 11 delay 0.33s killed before staging  ok
+trial 19 batch 12 delay 0.11s killed before staging  ok
+trial 20 batch 11 delay 0.55s finished               ok
+trial 21 batch 12 delay 0.01s killed before staging  ok
+trial 22 batch 11 delay 0.49s killed after commit    ok
+trial 23 batch 12 delay 0.08s killed before staging  ok
+trial 24 batch 11 delay 0.08s killed before staging  ok
+trial 25 batch 12 delay 0.03s killed before staging  ok
+trial 26 batch 11 delay 0.17s killed before staging  ok
+trial 27 batch 12 delay 0.23s killed after staging   ok
+trial 28 batch 11 delay 0.10s killed before staging  ok
+trial 29 batch 12 delay 0.16s killed before staging  ok
+trial 30 batch 11 delay 0.36s killed before staging  ok
+trial 31 batch 12 delay 0.10s killed before staging  ok
+trial 32 batch 11 delay 0.31s killed before staging  ok
+trial 33 batch 12 delay 0.02s killed before staging  ok
+trial 34 batch 11 delay 0.03s killed before staging  ok
+trial 35 batch 12 delay 0.06s killed before staging  ok
+trial 36 batch 11 delay 0.38s killed before staging  ok
+trial 37 batch 12 delay 0.12s killed before staging  ok
+trial 38 batch 11 delay 0.18s killed before staging  ok
+trial 39 batch 12 delay 0.16s killed before staging  ok
+
+40 trials, no violations. outcomes: {'killed before staging': 35, 'killed after commit': 2, 'finished': 2, 'killed after staging': 1}
+exit 0
